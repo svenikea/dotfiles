@@ -1,3 +1,9 @@
 #! /usr/bin/sh
 
+# Initial package before this can work
+sudo pacman -S python-pip
+pip install jedi pynvvm yarn
+yarn global add neovim
+
+
 cp .config/nvim $HOME/.config
