@@ -11,7 +11,7 @@ For [vim-plug](https://github.com/junegunn/vim-plug):
 :PlugInstall
 ```
 ## Install extension
-* For [vim-plug](https://github.com/junegunn/vim-plug):
+For [vim-plug](https://github.com/junegunn/vim-plug):
 ```
 :CocInstall coc-snippets coc-git coc-vimlsp coc-git coc-python coc-java coc-json coc-html coc-cmake
 ```
