@@ -7,3 +7,4 @@ yarn global add neovim
 
 
 cp .config/nvim $HOME/.config
+cp .bash_aliases .bash_profile .bashrc .xinitrc $HOME/
