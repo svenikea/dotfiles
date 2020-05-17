@@ -1,50 +1,22 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vimplug for Managing Plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <--- source out all plugins --->
+source $HOME/.config/nvim/plug-config/plugins.vim
 
-call plug#begin('~/local/share/nvim/plugged')
-" {{ Productivity }} 
-  Plug 'scrooloose/nerdtree' 
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'suan/vim-instant-markdown', {'rtp': 'after'}
-" {{ Colors & Themes }}
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'tomasiser/vim-code-dark'
-  Plug 'vim-python/python-syntax' 
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'  
+" <--- source general setting --->
+source $HOME/.config/nvim/plug-config/general.vim
 
-" {{ Icons }}
-  Plug 'ryanoasis/vim-devicons'
-call plug#end()
- 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" airline settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-let g:airline_theme = 'codedark'
-let g:airline_powerline_fonts = 1
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" Vim NERDTREE settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-"syntax on                   " autocmd vimenter * NERDTree
+" <--- source Intellisense --->
+source $HOME/.config/nvim/plug-config/coc.vim
 
-"autocmd vimenter * NERDTree
+" <--- source devicons --->
+source $HOME/.config/nvim/plug-config/nerdtree-icon.vim
 
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+" <--- NerdTree --->
+source $HOME/.config/nvim/plug-config/nerdtree.vim
 
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-map <C-n> :NERDTreeToggle<CR>
+" <---  source color scheme --->
+source $HOME/.config/nvim/plug-config/themes.vim
+source $HOME/.config/nvim/plug-config/nerdtree-syntax-highlight.vim
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" Basic Vim settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-set splitbelow
-colorscheme codedark
-set encoding=UTF-8
-let g:python_highlight_all = 1
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+
 
