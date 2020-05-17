@@ -1,0 +1,7 @@
+alias update="sudo pacman -Syyu"
+alias install="sudo pacman -S"
+alias search="pacman -Ss"
+alias st="st-flash"
+alias remove="sudo pacman -Rnsc"
+alias v="nvim"
+alias mirrors-fast="sudo pacman-mirrors --fasttrack && sudo pacman -Syyu"
