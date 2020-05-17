@@ -16,3 +16,8 @@ function _update_ps1() {
 if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
+
+# Start neofetch when start ssh or login
+if [ -f ~/.bash_aliases ]; then
+ . ~/.bash_aliases
+fi
