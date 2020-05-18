@@ -1,6 +1,9 @@
 " <--- source out all plugins --->
 source $HOME/.config/nvim/plug-config/plugins.vim
 
+" <--- Keybindings --->
+source $HOME/.config/nvim/plug-config/keybindings.vim
+
 " <--- source general setting --->
 source $HOME/.config/nvim/plug-config/general.vim
 
