@@ -2,7 +2,7 @@
 
 # Initial package before this can work
 install python-pip
-pip install jedi pynvvm yarn
+pip install jedi pynvim yarn
 yarn global add neovim
 
 
