@@ -19,7 +19,7 @@ For [vim-plug](https://github.com/junegunn/vim-plug):
 For [vim-plug](https://github.com/junegunn/vim-plug):
 ## Install language extension
 ```
-:CocInstall coc-snippets coc-git coc-vimlsp coc-git coc-python coc-java coc-json coc-html coc-cmake clangd
+:CocInstall coc-snippets coc-git coc-vimlsp coc-git coc-python coc-java coc-json coc-html coc-cmake coc-clangd
 ```
 * For ```coc-clangd``` neovim needs additional step
 ```
