@@ -13,8 +13,13 @@ For [vim-plug](https://github.com/junegunn/vim-plug):
 ```
 ## Install extension
 For [vim-plug](https://github.com/junegunn/vim-plug):
+## Install language extension
 ```
 :CocInstall coc-snippets coc-git coc-vimlsp coc-git coc-python coc-java coc-json coc-html coc-cmake
+```
+* For ```coc-clangd``` neovim needs additional step
+```
+:CocCommand clangd.install
 ```
 * After installing extensions use checkhealth command for extension entry
 ```
