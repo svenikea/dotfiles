@@ -1,4 +1,4 @@
-# Arch user dotfiles
+# UNIX user dotfiles
 * These are the dotfiles for any Linux distribution 
 # What are Dotfiles?
 ![screenshot](images/Screenshot.png)
