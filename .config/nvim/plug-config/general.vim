@@ -33,4 +33,4 @@ set spelllang=en_us
 set spell
 
 set clipboard=unnamedplus
-
+autocmd BufEnter * silent! lcd %:p:h   
