@@ -1,9 +1,5 @@
 #! /usr/bin/sh
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d8c88dcfc17331c721dcebbd621754b01fa5fab5
 # Moving files 
 cp .config/nvim $HOME/.config
 cp .bash_aliases .bash_profile .bashrc .xinitrc $HOME/
@@ -22,7 +18,3 @@ pip install jedi pynvim
 # Add neovim to yarn at global env
 yarn global add neovim
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d8c88dcfc17331c721dcebbd621754b01fa5fab5
