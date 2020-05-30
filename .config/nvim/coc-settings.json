@@ -9,12 +9,30 @@
 	    "json", 
 	    "python",
 	    "cpp",
-	    "c"
+	    "c",
+	    "java",
+	    "json"
     ],
   
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
-  
+    "python.autoComplete.addBrackets": true,                                                 
+    "python.autoComplete.extraPaths": [],                                                     
+    "python.autoUpdateLanguageServer": true,                                                  
+    "python.jediEnabled": true,                                                               
+    "clangd.semanticHighlighting": true,                                                     
+    "clangd.enabled": true,                                                                   
+    "clangd.checkUpdates": true,                                                              
+    "clangd.arguments": [],  
+    "clangd.path": "/home/john/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10  .0.0/bin/clangd",                                                                             
+    "html.enable": true,                                                                      
+    "html.format.enable": true,                                                               
+    "html.autoClosingTags": true,                                                             
+    "html.validate.styles": true,                                                             
+    "html.validate.scripts": true,                                                           
+    "json.enable": true,                                                                      
+    "java.enabled": true,                                                                     
+    "java.completion.enabled": true,     
     "snippets.ultisnips.directories": 
     [
       "UltiSnips",
