@@ -42,4 +42,4 @@ apt
 ```
 it should appear a green OK for every entry in the extension, if not follow the ```ADVICE```
 ## Mac users 
-* MacOs doesn't run fonts from the .fonts folder but instead $HOME/Library/Fonts so copy the content from .fonts to the /Library/Fonts and got to Terminal->Preference->Fonts to change to nerdfront for devicons to work
+* MacOs doesn't run fonts from the .fonts folder but instead $HOME/Library/Fonts so copy the content from .fonts to the /Library/Fonts and go to Terminal->Preference->Fonts to change to nerdfront for devicons to work
