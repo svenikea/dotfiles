@@ -340,7 +340,7 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- Standard program
-    awful.key({ modkey,		  }, 'b', function () awful.spawn(browser)end, {description = "open firefox", group = "application"} ),
+    awful.key({ modkey,		  }, 'b', function () awful.spawn(firefox)end, {description = "open firefox", group = "application"} ),
     awful.key({ modkey,		  }, 'f', function () awful.spawn(file_explorer)end, {description = "open nemo", group = "application"} ),
     awful.key({ modkey,		  }, 'c', function () awful.spawn('chromium')end, {description = "open crhomium", group = "application"} ),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
@@ -559,7 +559,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -631,3 +631,4 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+beautiful.useless_gap = 5
