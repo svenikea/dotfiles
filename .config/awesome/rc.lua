@@ -266,8 +266,9 @@ awful.screen.connect_for_each_screen(function(s)
 		arch_thickness = 3,
 		show_current_loevel = true,
 		enable_battery_warning = true,
-        charging = '#43a047',
-        warning_msg_position = 'top_right'
+        	charging = '#43a047',
+        	warning_msg_position = 'top_right',
+		warning_msg_icon = '~/.config/awesome/battery/spaceman.jpg',
 	    }),
 	    wibox.widget.textbox(' | '),
             mytextclock,
