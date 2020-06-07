@@ -67,6 +67,7 @@ editor_cmd = "xterm" .. " -e " .. editor
 firefox = "firefox"
 file_explorer = "ranger"
 Neovim_QT = "nvim-qt"
+Screenshot = "maim ~/Pictures/screenshot-$(date +%Y-%m-%d).png"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -350,7 +351,8 @@ globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
-
+    -- Utility
+    awful.key({ modkey,		  }, 'space', function () awful.spawn(Screenshot)end, {description = "take a screenshot", group = "screen"} ),
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
