@@ -31,6 +31,6 @@ set splitbelow
 set cursorline
 set spelllang=en_us
 set spell
-
+set mouse=a
 set clipboard=unnamedplus
 autocmd BufEnter * silent! lcd %:p:h   
