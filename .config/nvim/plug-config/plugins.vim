@@ -20,6 +20,7 @@ Plug 'ctrlpvim/ctrlp.vim' " Fuzzy file finder
 Plug 'vifm/vifm.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'vimlab/split-term.vim'
 
 " <--- Syntax highlight --->
 Plug 'vim-pandoc/vim-pandoc'
