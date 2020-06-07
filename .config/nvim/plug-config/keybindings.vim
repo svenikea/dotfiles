@@ -4,7 +4,7 @@ map <C-p> :ctrlp_map<CR>
 map <C-x> :NERDTreeToggle<CR>
 map <C-b> :EditVifm<CR>
 map ; :Files<CR>
-map 3 :term<CR>
+map 3 :Term<CR>
 
 nnoremap 1 :bn<CR>
 nnoremap 2 :bp<CR>
