@@ -65,7 +65,8 @@ terminal = "termite"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = "xterm" .. " -e " .. editor
 firefox = "firefox"
-file_explorer = "nemo"
+file_explorer = "ranger"
+Neovim_QT = "nvim-qt"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -341,6 +342,7 @@ globalkeys = gears.table.join(
 
     -- Standard program
     awful.key({ modkey,		  }, 'b', function () awful.spawn(firefox)end, {description = "open firefox", group = "application"} ),
+    awful.key({ modkey,		  }, 'q', function () awful.spawn(Neovim_QT)end, {description = "neovim in GUI", group = "application"} ),
     awful.key({ modkey,		  }, 'f', function () awful.spawn(file_explorer)end, {description = "open nemo", group = "application"} ),
     awful.key({ modkey,		  }, 'c', function () awful.spawn('chromium')end, {description = "open crhomium", group = "application"} ),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
