@@ -42,7 +42,12 @@ theme.border_marked = "#91231c"
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
---theme.taglist_bg_focus = "#ff0000"
+theme.taglist_fg_focus          = "#3992af"
+theme.taglist_fg_occupied       = "#164b5d"
+theme.taglist_fg_urgent         = "#ED7572"
+theme.taglist_fg_empty          = "#828282"
+theme.taglist_font              = "awesomewm-font 13"
+theme.taglist_spacing           = 3 
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
