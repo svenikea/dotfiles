@@ -99,7 +99,7 @@ theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/m
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
 
-theme.wallpaper = "~/.config/awesome/themes/default/Yosimte.jpg"
+--theme.wallpaper = "~/.config/awesome/themes/default/Yosimte.jpg"
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
 theme.layout_fairv = themes_path.."default/layouts/fairvw.png"
