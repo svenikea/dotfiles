@@ -242,13 +242,12 @@ awful.screen.connect_for_each_screen(function(s)
 	    wibox.widget.textbox(' | '),
 	    storage_widget({mounts = {'/', '/home'}}),
 	    wibox.widget.textbox(' | '),
-	    --cpu_widget({
-		--width = 70,
-		--step_wdith = 2,
-		--step_spacing = 0,
-		--color = '#434c5e'
-        --}),
-        
+	    cpu_widget({
+		    width = 70,
+		    step_wdith = 2,
+		    step_spacing = 0,
+		    color = '#434c5e'
+        	}),
 	    wibox.widget.textbox(' | '),
 	    ram_widget(),
 	    wibox.widget.textbox(' | '),
@@ -262,8 +261,12 @@ awful.screen.connect_for_each_screen(function(s)
 		main_color = '#af13f7',
 		mute_color = '#ff0000',
 		width = 80,
-		shape = 'powerline',
+		shape = 'rounded_bar',
 		margin = 8,
+		get_volume_cmd = 'amixer -D pulse set Master',
+		inc_volume_cmd = 'amixer -D pulse set Master 5%+',
+		dec_volume_cmd = 'amixer -D pulse set Master 5%-',
+		tog_volume_cmd = 'amixer -D pulse set Master toggle'
 	    }),
 	    wibox.widget.textbox(' | '),
 	    battery_widget_feature({
@@ -272,12 +275,12 @@ awful.screen.connect_for_each_screen(function(s)
 		enable_battery_warning = true,
         	charging = '#43a047',
         	warning_msg_position = 'top_right',
-		warning_msg_icon = '~/.config/awesome/battery/spaceman.jpg',
+		warning_msg_icon = '~/.config/awesome/battery/spaceman.jpg'
 	    }),
 	    wibox.widget.textbox(' | '),
             mytextclock,
 	    wibox.widget.textbox(' | '),
-            s.mylayoutbox,
+            --s.mylayoutbox,
 	    wibox.widget.textbox(' | '),
         },
     }
@@ -294,12 +297,12 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-    awful.key({}, "XF86AudioLowerVolume", function() awful.util.spawn('amixer set Master 5%-')end, {description = "volume down", group = "hotkeys"}),
-    awful.key({}, "XF86AudioRaiseVolume", function() awful.util.spawn('amixer set Master 5%+')end, {description = "volume up", group = "hotkeys"}),
-    awful.key({}, "XF86AudioMute", function() awful.util.spawn('amixer set Master toggle')end, {description = "toggle volume", group = "hotkeys"}),
-    awful.key({}, "XF86MonBrightnessUp", function () awful.spawn("xbacklight -inc  5") end, {description = "increase brightness", group = "custom"}),
-    awful.key({}, "XF86MonBrightnessDown", function () awful.spawn("xbacklight -dec  5") end, {description = "decrease brightness", group = "custom"}),
-    awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/Pictures/ 2>/dev/null'", false) end),
+    awful.key({}, "XF86AudioLowerVolume", function() os.execute('amixer -D pulse set Master 5%-')end, {description = "volume down", group = "hotkeys"}),
+    awful.key({}, "XF86AudioRaiseVolume", function() os.execute('amixer -D pulse set Master 5%+')end, {description = "volume up", group = "hotkeys"}),
+    awful.key({}, "XF86AudioMute", function() os.execute('amixer -D pulse set Master toggle')end, {description = "toggle volume", group = "hotkeys"}),
+    awful.key({}, "XF86MonBrightnessUp", function () os.execute("xbacklight -inc  5") end, {description = "increase brightness", group = "custom"}),
+    awful.key({}, "XF86MonBrightnessDown", function () os.execute("xbacklight -dec  5") end, {description = "decrease brightness", group = "custom"}),
+    awful.key({ }, "Print", function () awful.util.spawn(Screenshot) end, {description = "take a screenshot", group = "screen"}),
     
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -357,7 +360,6 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
     -- Utility
-    awful.key({ modkey,		  }, 'space', function () awful.spawn(Screenshot)end, {description = "take a screenshot", group = "screen"} ),
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
