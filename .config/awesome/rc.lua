@@ -61,13 +61,16 @@ end
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "termite"
-editor = os.getenv("EDITOR") or "nano"
-editor_cmd = "xterm" .. " -e " .. editor
-firefox = "firefox"
-file_explorer = "ranger"
-Neovim_QT = "nvim-qt"
-Screenshot = "maim ~/Pictures/screenshot-$(date +%Y-%m-%d).png"
+terminal 			= "termite"
+editor 				= os.getenv("EDITOR") or "nano"
+editor_cmd 			= "xterm" .. " -e " .. editor
+firefox 			= "firefox"
+file_explorer 			= "ranger"
+Neovim_QT 			= "nvim-qt"
+Screenshot 			= "maim ~/Pictures/screenshot-$(date +%Y-%m-%d).png"
+wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
+transparency 			= "picom"
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -636,3 +639,5 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 beautiful.useless_gap = 5
+awful.spawn.with_shell(wallpaper)
+awful.spawn.with_shell(transparency)
