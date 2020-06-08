@@ -61,8 +61,8 @@ end
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal 			= "termite"
-editor 				= os.getenv("EDITOR") or "nano"
+terminal			= "termite"
+editor 				= os.getenv("EDITOR") or "nano" 
 editor_cmd 			= "xterm" .. " -e " .. editor
 firefox 			= "firefox"
 file_explorer 			= "ranger"
@@ -70,6 +70,7 @@ Neovim_QT 			= "nvim-qt"
 Screenshot 			= "maim ~/Pictures/screenshot-$(date +%Y-%m-%d).png"
 wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
 transparency 			= "picom"
+dmenu				= "dmenu_run"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -196,7 +197,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "A", "W", "E", "S", "O", "M", "E", "W", "M" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -386,9 +387,10 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
+    -- Dmenu launcher
+    awful.key({ modkey },            "r",     function ()
+    awful.util.spawn(dmenu) end,
+              {description = "Run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
