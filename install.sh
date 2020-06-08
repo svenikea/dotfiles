@@ -1,7 +1,10 @@
 #! /usr/bin/sh
 
+# Detecting username
+username=$(whoaimi)
 # Moving files 
 cp .config $HOME/
+cp .fonts $HOME/
 cp .bash_aliases .bash_profile .bashrc .xinitrc $HOME/
 
 # Installing vim plug currently using neovim
@@ -17,4 +20,5 @@ pip install jedi pynvim
 yarn global add neovim
 
 # Lastly change the permission 
-chown john $HOME/.config
+sudo chown ${username} $HOME/.config
+sudo chown ${username} $HOME/.fonts
