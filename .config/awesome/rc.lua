@@ -19,7 +19,7 @@ local freedesktop = require("freedesktop")
 -- lain utilities
 local lain = require("lain")
 
-local volume_bar = require("volume-widget.volumebar")
+local volume_bar = require("volume-widget.volumearc")
 local brightness_widget = require("brightness.brightnessarc")
 local battery_widget_feature = require("battery.batteryarc")
 local ram_widget = require("ram.ram")
@@ -251,32 +251,11 @@ awful.screen.connect_for_each_screen(function(s)
 	    wibox.widget.textbox(' | '),
 	    ram_widget(),
 	    wibox.widget.textbox(' | '),
-	    brightness_widget({
-		get_brightness_cmd = 'xbacklight -get',
-		inc_brightness_cmd = 'xbacklight -inc 5',
-		dec_brightness_cmd = 'xbacklight -dec 5',
-	    }),
+	    brightness_widget(),
 	    wibox.widget.textbox(' | '),
-	    volume_bar({
-		main_color = '#af13f7',
-		mute_color = '#ff0000',
-		width = 80,
-		shape = 'rounded_bar',
-		margin = 8,
-		get_volume_cmd = 'amixer -D pulse set Master',
-		inc_volume_cmd = 'amixer -D pulse set Master 5%+',
-		dec_volume_cmd = 'amixer -D pulse set Master 5%-',
-		tog_volume_cmd = 'amixer -D pulse set Master toggle'
-	    }),
+	    volume_bar(),
 	    wibox.widget.textbox(' | '),
-	    battery_widget_feature({
-		arch_thickness = 3,
-		show_current_loevel = true,
-		enable_battery_warning = true,
-        	charging = '#43a047',
-        	warning_msg_position = 'top_right',
-		warning_msg_icon = '~/.config/awesome/battery/spaceman.jpg'
-	    }),
+	    battery_widget_feature(),
 	    wibox.widget.textbox(' | '),
             mytextclock,
 	    wibox.widget.textbox(' | '),
