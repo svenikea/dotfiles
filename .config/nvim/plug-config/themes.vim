@@ -8,3 +8,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:lsp_cxx_h1_use_text_props = 1
+
+" set transparency on nvim 
+hi Normal guibg=NONE ctermbg=NONE
