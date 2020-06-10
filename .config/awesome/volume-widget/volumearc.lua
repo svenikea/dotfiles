@@ -15,9 +15,9 @@ local watch = require("awful.widget.watch")
 local wibox = require("wibox")
 
 local GET_VOLUME_CMD = 'amixer -D pulse sget Master'
-local INC_VOLUME_CMD = 'amixer -q -D pulse sset Master 5%+'
-local DEC_VOLUME_CMD = 'amixer -q -D pulse sset Master 5%-'
-local TOG_VOLUME_CMD = 'amixer -q -D pulse sset Master toggle'
+local INC_VOLUME_CMD = 'amixer -q -D pulse set Master 5%+'
+local DEC_VOLUME_CMD = 'amixer -q -D pulse set Master 5%-'
+local TOG_VOLUME_CMD = 'amixer -q -D pulse set Master toggle'
 
 local PATH_TO_ICON = "/usr/share/icons/Arc/status/symbolic/audio-volume-muted-symbolic.svg"
 
@@ -29,7 +29,7 @@ local function worker(args)
 
     local main_color = args.main_color or beautiful.fg_color
     local bg_color = args.bg_color or '#ffffff11'
-    local mute_color = args.mute_color or beautiful.fg_urgent
+    local mute_color = args.mute_color or '#ff0000'
     local path_to_icon = args.path_to_icon or PATH_TO_ICON
     local thickness = args.thickness or 2
     local height = args.height or 18
