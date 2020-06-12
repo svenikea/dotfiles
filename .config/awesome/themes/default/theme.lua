@@ -49,6 +49,11 @@ theme.taglist_fg_empty          = "#828282"
 theme.taglist_font              = "awesomewm-font 13"
 theme.taglist_spacing           = 3 
 
+-- Tasklist configuration
+theme.tasklist_align = "center"
+
+
+
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
@@ -130,7 +135,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = 'elementary'
+theme.icon_theme = 'Arc'
 
 return theme
 
