@@ -22,7 +22,7 @@ local function worker(args)
 
     local args = args or {}
 
-    local font = args.font or 'MonoSpace 6'
+    local font = args.font or 'Play 6'
     local arc_thickness = args.arc_thickness or 2
     local show_current_level = args.show_current_level or true
     local size = args.size or 18
@@ -34,8 +34,8 @@ local function worker(args)
     local charging_color = args.charging_color or '#43a047'
 
     local warning_msg_title = args.warning_msg_title or 'Huston, we have a problem'
-    local warning_msg_text = args.warning_msg_text or 'Battery is dying and its getting dark in here'
-    local warning_msg_position = args.warning_msg_position or 'top__right'
+    local warning_msg_text = args.warning_msg_text or 'Battery is dying its getting dark in here'
+    local warning_msg_position = args.warning_msg_position or 'top_right'
     local warning_msg_icon = args.warning_msg_icon or HOME .. '/.config/awesome/battery/spaceman.jpg'
     local enable_battery_warning = args.enable_battery_warning
     if enable_battery_warning == nil then
