@@ -72,6 +72,16 @@ wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
 transparency 			= "picom"
 dmenu				= "dmenu_run"
 
+--Utility command
+volume_up  			= 'amixer -D pulse set Master 5%+'
+volume_down			= 'amixer -D pulse set Master 5%-'
+volume_toggle			= 'amixer -D pulse set Master toggle'
+brightness_up			= 'xbacklight -inc  5'
+brightness_down			= 'xbacklight -dec 5'
+
+-- System startup
+power_management 		= 'xfce4-power-manager --no-daemon'
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -220,7 +230,12 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
+        buttons = tasklist_buttons,
+	style = {
+		shape = gears.shape.rounded_bar,
+		shape_border_width = 2,
+		shape_border_color = '#777777',
+	}
     }
 
     -- Create the wibox
@@ -242,12 +257,13 @@ awful.screen.connect_for_each_screen(function(s)
 	    wibox.widget.textbox(' | '),
 	    storage_widget({mounts = {'/', '/home'}}),
 	    wibox.widget.textbox(' | '),
-	    cpu_widget({
-		    width = 70,
-		    step_wdith = 2,
-		    step_spacing = 0,
-		    color = '#434c5e'
-        	}),
+	    cpu_widget(
+	--	width = 70,
+	--	step_wdith = 2,
+	--	step_spacing = 0,
+	--	color = '#434c5e'
+		),
+        
 	    wibox.widget.textbox(' | '),
 	    ram_widget(),
 	    wibox.widget.textbox(' | '),
@@ -258,9 +274,8 @@ awful.screen.connect_for_each_screen(function(s)
 	    battery_widget_feature(),
 	    wibox.widget.textbox(' | '),
             mytextclock,
-	    wibox.widget.textbox(' | '),
             --s.mylayoutbox,
-	    wibox.widget.textbox(' | '),
+	    --wibox.widget.textbox(' | '),
         },
     }
 end)
@@ -276,12 +291,13 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-    awful.key({}, "XF86AudioLowerVolume", function() os.execute('amixer -D pulse set Master 5%-')end, {description = "volume down", group = "hotkeys"}),
-    awful.key({}, "XF86AudioRaiseVolume", function() os.execute('amixer -D pulse set Master 5%+')end, {description = "volume up", group = "hotkeys"}),
-    awful.key({}, "XF86AudioMute", function() os.execute('amixer -D pulse set Master toggle')end, {description = "toggle volume", group = "hotkeys"}),
-    awful.key({}, "XF86MonBrightnessUp", function () os.execute("xbacklight -inc  5") end, {description = "increase brightness", group = "custom"}),
-    awful.key({}, "XF86MonBrightnessDown", function () os.execute("xbacklight -dec  5") end, {description = "decrease brightness", group = "custom"}),
-    awful.key({ }, "Print", function () awful.util.spawn(Screenshot) end, {description = "take a screenshot", group = "screen"}),
+    awful.key({}, "XF86AudioLowerVolume", function() os.execute(volume_down)end, {description = "volume down", group = "hotkeys"}),
+    awful.key({}, "XF86AudioRaiseVolume", function() os.execute(volume_up)end, {description = "volume up", group = "hotkeys"}),
+    awful.key({}, "XF86AudioMute", function() os.execute(volume_toggle)end, {description = "toggle volume", group = "hotkeys"}),
+    awful.key({}, "XF86MonBrightnessUp", function () os.execute(brightness_up) end, {description = "increase brightness", group = "screen"}),
+    awful.key({}, "XF86MonBrightnessDown", function () os.execute(brightness_down) end, {description = "decrease brightness", group = "screen"}),
+    awful.key({ }, "Print", function () awful.spawn.with_shell(Screenshot) end, {description = "Screenshot", 
+    group = "screen"}),
     
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -371,7 +387,7 @@ globalkeys = gears.table.join(
     -- Dmenu launcher
     awful.key({ modkey },            "r",     function ()
     awful.util.spawn(dmenu) end,
-              {description = "Run prompt", group = "launcher"}),
+              {description = "Run dmenu", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
@@ -596,7 +612,7 @@ client.connect_signal("request::titlebars", function(c)
         { -- Middle
             { -- Title
                 align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
+                --widget = awful.titlebar.widget.titlewidget(c)
             },
             buttons = buttons,
             layout  = wibox.layout.flex.horizontal
@@ -624,3 +640,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 beautiful.useless_gap = 5
 awful.spawn.with_shell(wallpaper)
 awful.spawn.with_shell(transparency)
+awful.util.spawn_with_shell(power_management)
+awful.util.spawn_with_shell("~/.config/awesome/scripts/locker.sh&")
