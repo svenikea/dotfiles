@@ -13,7 +13,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 
 
 # Package before this can work
-install python-pip yarn xclip nodejs  
+install python-pip yarn nodejs  
 pip install jedi pynvim
 
 # Add neovim to yarn at global env
