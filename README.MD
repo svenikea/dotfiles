@@ -5,8 +5,8 @@ These are my dotfiles for Arch Linux based distribution that I'm been ricing for
 Dotfiles are User-specific application configuration is traditionally stored in so called dotfiles (files whose filename starts with a dot). Dotfiles are text-based and they are usually hidden on the system. When an application is launched, it look for it corresponding dotfiles to load the configuration that the user had defined previously like tittle shortcuts, tweaks, and settings. These dotfiles are shareable which mean that one user can use other users dotfiles for their specific application  
 # Who Am I?
 <p>
-<img style="float:left;width:4%;height:4%;border:0;margin:0 1% 0 0;" src="images/avatar.png" alt="my avatar" size="20%">
-    I am Ky Nguyen, my friend called me John, I'm an undergraduate who studies engineer. In the summer of 2018, I discovered one of my friends uses Ubuntu on his laptop, and suddenly I decided to give it a try. Since that, I began to distro-hopping to find the distro that I love. Then I found Arch Linux which is a very customizable and light-weighted distro that I've been using ever since</p>
+<img align="left" padding="4" src="images/avatar.png" width="12%" height="12%" alt="my avatar" size="20%">
+    I am Ky Nguyen, my friend called me John, I'm an undergraduate who studies engineer. In the summer of 2018, I discovered one of my friends uses Ubuntu on his laptop, and suddenly I decided to give it a try. Since that, I began to distro-hopping to find the distro that I love. Then I found Arch Linux which is a very customizable and light-weighted distro that I've been using ever since.</p>
 
 
 
@@ -18,7 +18,7 @@ https://dotfiles.github.io/
 # Credits
 [streetturtle](https://github.com/streetturtle/awesome-wm-widgets) - for the widgets
 
-[Wwesome WM](https://awesomewm.org/) - the folks at awesome
+[Awesome WM](https://awesomewm.org/) - the folks at awesome
 
 [Arch Linux](https://wiki.archlinux.org/) - the Arch Wiki Pages
 
