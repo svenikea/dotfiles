@@ -16,8 +16,10 @@ https://dotfiles.github.io/
 
 
 # Credits
-[streetturtle](https://github.com/streetturtle/awesome-wm-widgets) - for the widget
+[streetturtle](https://github.com/streetturtle/awesome-wm-widgets) - for the widgets
 
 [Wwesome WM](https://awesomewm.org/) - the folks at awesome
 
 [Arch Linux](https://wiki.archlinux.org/) - the Arch Wiki Pages
+
+[junngunn](https://github.com/junegunn/vim-plug) - for the Vim plugin manager
