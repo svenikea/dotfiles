@@ -2,6 +2,7 @@
 let g:NERDSpaceDelims = 1
 filetype plugin on
 syntax on
+syntax enable
 
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
