@@ -5,7 +5,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'kblin/vim-fountain'
 Plug 'morhetz/gruvbox' 
-Plug 'jackguo380/vim-lsp-cxx-highlight'  
+" Plug 'jackguo380/vim-lsp-cxx-highlight'  
 " <--- Code completion --->
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -21,7 +21,6 @@ Plug 'vifm/vifm.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vimlab/split-term.vim'
-
 " <--- Syntax highlight --->
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax' 
