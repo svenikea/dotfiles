@@ -16,9 +16,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Custom widget
 local freedesktop = require("freedesktop")
--- lain utilities
 local lain = require("lain")
-
 local volume_bar = require("volume-widget.volumearc")
 local brightness_widget = require("brightness.brightnessarc")
 local battery_widget_feature = require("battery.batteryarc")
@@ -26,10 +24,13 @@ local ram_widget = require("ram.ram")
 local cpu_widget = require("cpu.cpu")
 local calendar_widget = require("calendar.calendar")
 local storage_widget = require("storage.storage")
+local music_widget = require("music-widget.mpdarc")
 require("vicious")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+
+--{{{ themes
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -61,7 +62,7 @@ end
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal			= "termite"
+terminal			= "kitty"
 editor 				= os.getenv("EDITOR") or "nano" 
 editor_cmd 			= "xterm" .. " -e " .. editor
 firefox 			= "firefox"
@@ -71,6 +72,7 @@ Screenshot 			= "maim ~/Pictures/screenshot-$(date +%Y-%m-%d).png"
 wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
 transparency 			= "picom"
 dmenu				= "dmenu_run"
+chrome 				= "google-chrome-stable"
 
 --Utility command
 volume_up  			= 'amixer -D pulse set Master 5%+'
@@ -263,7 +265,7 @@ awful.screen.connect_for_each_screen(function(s)
 	--	step_spacing = 0,
 	--	color = '#434c5e'
 		),
-        
+--            music_widget, 
 	    wibox.widget.textbox(' | '),
 	    ram_widget(),
 	    wibox.widget.textbox(' | '),
@@ -275,6 +277,7 @@ awful.screen.connect_for_each_screen(function(s)
 	    wibox.widget.textbox(' | '),
             mytextclock,
             --s.mylayoutbox,
+--	    wibox.widget.textbox(' | '),
 	    --wibox.widget.textbox(' | '),
         },
     }
@@ -347,7 +350,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,		  }, 'b', function () awful.spawn(firefox)end, {description = "open firefox", group = "application"} ),
     awful.key({ modkey,		  }, 'q', function () awful.spawn(Neovim_QT)end, {description = "neovim in GUI", group = "application"} ),
     awful.key({ modkey,		  }, 'f', function () awful.spawn(file_explorer)end, {description = "open nemo", group = "application"} ),
-    awful.key({ modkey,		  }, 'c', function () awful.spawn('chromium')end, {description = "open crhomium", group = "application"} ),
+    awful.key({ modkey,		  }, 'c', function () awful.spawn(chrome)end, {description = "open chrome", group = "application"} ),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
@@ -641,4 +644,4 @@ beautiful.useless_gap = 5
 awful.spawn.with_shell(wallpaper)
 awful.spawn.with_shell(transparency)
 awful.util.spawn_with_shell(power_management)
-awful.util.spawn_with_shell("~/.config/awesome/scripts/locker.sh&")
+--awful.util.spawn_with_shell("~/.config/awesome/scripts/locker.sh&")
