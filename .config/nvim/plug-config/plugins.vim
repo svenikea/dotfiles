@@ -8,7 +8,7 @@ Plug 'morhetz/gruvbox'
 " Plug 'jackguo380/vim-lsp-cxx-highlight'  
 " <--- Code completion --->
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+Plug 'mattn/emmet-vim'
 " <--- Fonts and icons --->
 Plug 'ryanoasis/vim-devicons'
 
