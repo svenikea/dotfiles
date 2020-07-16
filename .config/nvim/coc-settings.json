@@ -22,7 +22,7 @@
     "clangd.semanticHighlighting": true,                                                     
     "clangd.enabled": true,                                                                   
     "clangd.checkUpdates": true,                                                              
-    "clangd.path": "/home/john/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10  .0.0/bin/clangd",                                                                             
+    "clangd.path": "/home/john/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10.0.0/bin/clangd",                                                                             
     "html.enable": true,                                                                      
     "html.format.enable": true,                                                               
     "html.autoClosingTags": true,                                                             
@@ -31,8 +31,8 @@
     "json.enable": true,                                                                      
     "java.enabled": true,                                                                     
     "java.completion.enabled": true,
-	"git.command": true,
-	"got.enableGutters": true,
+    "git.command": true,
+    "got.enableGutters": true,
     "snippets.ultisnips.directories": 
     [
       "UltiSnips",
