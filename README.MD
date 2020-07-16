@@ -18,6 +18,8 @@ https://dotfiles.github.io/
 # Credits
 [streetturtle](https://github.com/streetturtle/awesome-wm-widgets) - for the widgets
 
+[lain](https://github.com/lcpz/lain) - for the simple yet customizable widget
+
 [Awesome WM](https://awesomewm.org/) - the folks at awesome
 
 [Arch Linux](https://wiki.archlinux.org/) - the Arch Wiki Pages
