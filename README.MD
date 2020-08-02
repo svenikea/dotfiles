@@ -1,7 +1,7 @@
 # UNIX user dotfiles
 These are my dotfiles for Arch Linux based distribution that I'm been ricing for a couple of months and I would like to share it to the internet  
 # What are dotfiles?
-![screenshot](images/pic2.png)
+![screenshot](images/screenshot-2020-07-31.png)
 Dotfiles are User-specific application configuration is traditionally stored in so called dotfiles (files whose filename starts with a dot). Dotfiles are text-based and they are usually hidden on the system. When an application is launched, it look for it corresponding dotfiles to load the configuration that the user had defined previously like tittle shortcuts, tweaks, and settings. These dotfiles are shareable which mean that one user can use other users dotfiles for their specific application  
 # Who Am I?
 <p>
