@@ -50,8 +50,9 @@ firefox 			= "firefox"
 file_explorer 			= "ranger"
 Neovim_QT 			= "nvim-qt"
 Screenshot 			= "maim ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d).png"
-wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
-transparency 		= "picom --experimental-backends"
+--wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
+transparency 			= "picom --experimental-backends"
+wallpaper 			= "feh --recursive --bg-fill --randomize ~/Pictures/wallpapers/"
 dmenu 				= "dmenu_run"
 chrome 				= "google-chrome-stable"
 compton 			= "compton --config ~/.config/compton/compton.conf"
@@ -63,9 +64,14 @@ volume_down 			= "amixer -D pulse set Master 2%-"
 volume_toggle 			= "amixer -D pulse set Master toggle"
 brightness_up 			= "xbacklight -inc 5"
 brightness_down 		= "xbacklight -dec 5"
-power_management 		= "xfce4-power-manager --no-daemon"
+power_management 		= "tlp start"
 lid_operation 			= "light-locker --lock-on-suspend"
-
+logout 				= "light-locker-command -l"
+-- System operation
+sleep 				= "systemctl suspend"
+reboot 				= "systemctl reboot"
+poweroff 			= "systemctl poweroff"
+hibernate 			= "systemctl hibernate"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -83,18 +89,24 @@ modkey = "Mod4"
 -- Create a launcher widget and a main menu
 myawesomemenu = {
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", "kitty nvim" .. " -e man awesome" },
+   { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
+                                   { "open terminal", terminal },
+				   --{ "logout", function() awesome.quit() end },
+				   { "logout", logout },
+				   { "sleep", sleep },
+				   { "reboot", reboot },
+				   { "hibernate", hibernate },
+				   { "poweroff", poweroff },
 }
 
 mymainmenu = freedesktop.menu.build({ 
 	before = { 
 		{ "awesome", myawesomemenu, beautiful.awesome_icon },
+
 	},
 			after = {
-                                    { "open terminal", terminal },
                                   }
                         })
 
@@ -207,6 +219,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
+	    --lain.widget.net().icon,
+	    --lain.widget.net(),
+	    lain.widget.temp().icon,
+	    lain.widget.temp(),
 	    wibox.widget.textbox(" "), 
 	    lain.widget.mem().icon,
 	    lain.widget.mem(),
@@ -214,13 +230,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
 	    lain.widget.cpu().icon,
 	    lain.widget.cpu(),
 	    wibox.widget.textbox(" "),
-        lain.widget.bat({}).icon,
-        lain.widget.bat({}),
-	    wibox.widget.textbox(" | "),
+	    lain.widget.bat({}),
+	    wibox.widget.textbox(" "),
 	    wibox.widget.textbox("-"),
 	    lain.widget.alsabar({}).bar,
 	    wibox.widget.textbox("+"),
-	    wibox.widget.textbox(" | "),
+	    wibox.widget.textbox(" "),
             mytextclock,
         },
     }
@@ -246,7 +261,7 @@ awful.keyboard.append_global_keybindings({
    awful.key({}, "XF86AudioMute", function() os.execute(volume_toggle) end, {description = "volume mute", group = "hotkeys"}),
    awful.key({}, "XF86MonBrightnessUp", function() os.execute(brightness_up) end, {description = "brightness up", group = "screen"}),
    awful.key({}, "XF86MonBrightnessDown", function() os.execute(brightness_down) end, {description = "brightness down", group = "screen"}),
-   awful.key({}, "Print", function() os.execute(screenshot) end, {description = "volume down", group = "screen"}),
+   awful.key({}, "Print", function() awful.spawn.with_shell(Screenshot) end, {description = "screenshot", group = "screen"}),
 
 --- {{ Application launcher
     awful.key({modkey, },"c", function () awful.spawn(chrome)end ,
