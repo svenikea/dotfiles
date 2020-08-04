@@ -11,7 +11,8 @@ local wibox    = require("wibox")
 local math     = math
 local string   = string
 local tostring = tostring
-
+local lain     = require("lain")
+local markup   = lain.util.markup
 -- CPU usage
 -- lain.widget.cpu
 
@@ -20,7 +21,9 @@ local function factory(args)
     local args     = args or {}
     local timeout  = args.timeout or 2
     local settings = args.settings or function() end
-
+    local icon_dir = os.getenv("HOME") .. "/.config/awesome/themes/zenburn/icons/"
+    cpu.icon_path  = icon_dir .. "cpu.png"
+    cpu.icon 	   = wibox.widget.imagebox(cpu.icon_path)
     function cpu.update()
         -- Read the amount of time the CPUs have spent performing
         -- different kinds of work. Read the first line of /proc/stat
@@ -62,9 +65,13 @@ local function factory(args)
 
         cpu_now = cpu.core
         cpu_now.usage = cpu_now[0].usage
+	if (cpu_now.usage < 29 ) then cpu_now.color = "#00ff00"
+	elseif (cpu_now.usage > 30 and cpu_now.usage < 69) then cpu_now.color = "#ffff00"
+	elseif (cpu_now.usage > 70 ) then cpu_now.color = "#ff0000"
+	end
         widget = cpu.widget
-
         settings()
+	widget:set_markup(markup(cpu_now.color, cpu_now.usage) .. "%")
     end
 
     helpers.newtimer("cpu", timeout, cpu.update)
