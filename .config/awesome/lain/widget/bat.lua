@@ -15,6 +15,7 @@ local string   = string
 local ipairs   = ipairs
 local tonumber = tonumber
 
+local beautiful = require("beautiful")
 -- Battery infos
 -- lain.widget.bat
 
@@ -28,14 +29,16 @@ local function factory(args)
 
     local bat         = { widget = wibox.widget.textbox() }
     local args        = args or {}
-    local timeout     = args.timeout or 30
+    local timeout     = args.timeout or 1
     local notify      = args.notify or "on"
     local full_notify = args.full_notify or notify
     local n_perc      = args.n_perc or { 5, 15 }
     local batteries   = args.batteries or (args.battery and {args.battery}) or {}
     local ac          = args.ac or "AC0"
     local settings    = args.settings or function() end
-
+    --local icon_dir = os.getenv("HOME") .. "/.config/awesome/themes/zenburn/icons/"
+    --bat.icon_path = icon_dir .. "thermo.svg"
+    local icon 	      = wibox.widget.imagebox()
     function bat.get_batteries()
         helpers.line_callback("ls -1 " .. pspath, function(line)
             local bstr =  string.match(line, "BAT%w+")
@@ -136,7 +139,7 @@ local function factory(args)
         -- "Full", "Unknown" or "Charging". When the laptop is not plugged in,
         -- one or more of the batteries may be full, but only one battery
         -- discharging suffices to set global status to "Discharging".
-        bat_now.status = bat_now.n_status[1]
+        bat_now.status = bat_now.n_status[1] or "N/A"
         for _,status in ipairs(bat_now.n_status) do
             if status == "Discharging" or status == "Charging" then
                 bat_now.status = status
@@ -183,7 +186,14 @@ local function factory(args)
 
         widget = bat.widget
         settings()
-
+--	if (tonumber(bat_now.perc) >=1 and tonumber(bat_now.perc)<=20) then 
+--		bat.icon = wibox.widget.imagebox(beautiful.bat_icon_20)
+--		elseif (tonumber(bat_now.perc) >=21 and tonumber(bat_now.perc)<=40) then
+--			bat.icon = wibox.widget.imagebox(beautiful.bat_icon_40)
+--			elseif (tonumber(bat_now.perc) >=41 and tonumber(bat_now.perc)<=60) then
+--				bat.icon = wibox.widget.imagebox(beautiful.bat_icon_60)
+--	widget:set_image(beautiful.bat_icon_60)
+	widget:set_markup(bat_now.perc .. " %")
         -- notifications for critical, low, and full levels
         if notify == "on" then
             if bat_now.status == "Discharging" then
