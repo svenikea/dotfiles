@@ -1,6 +1,6 @@
 alias update="sudo pacman -Syyu --needed"
 alias install="sudo pacman -S --needed"
-alias search="sudo pacman -Ss"
+alias search="pacman -Ss"
 alias clean="sudo pacman -Sc"
 alias st="st-flash"
 alias remove="sudo pacman -Rnsc"
