@@ -15,10 +15,13 @@ local tonumber = tonumber
 local function factory(args)
     local temp     = { widget = wibox.widget.textbox() }
     local args     = args or {}
-    local timeout  = args.timeout or 30
+    local timeout  = args.timeout or 1 
     local tempfile = args.tempfile or "/sys/devices/virtual/thermal/thermal_zone0/temp"
     local settings = args.settings or function() end
 
+    local icon_dir = os.getenv("HOME") .. "/.config/awesome/themes/zenburn/icons/"
+    temp.icon_path = icon_dir .. "thermo.svg"
+    temp.icon 	   = wibox.widget.imagebox(temp.icon_path)
     function temp.update()
         helpers.async({"find", "/sys/devices", "-type", "f", "-name", "*temp*"}, function(f)
             temp_now = {}
@@ -32,7 +35,8 @@ local function factory(args)
             end
             coretemp_now = temp_now[tempfile] or "N/A"
             widget = temp.widget
-            settings()
+            settings() 
+	    widget:set_markup(" " .. coretemp_now .. "°C")
         end)
     end
 
