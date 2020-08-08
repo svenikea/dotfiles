@@ -47,6 +47,10 @@ terminal 			= "kitty"
 editor 				= os.getenv("EDITOR") or "nvim"
 editor_cmd 			= terminal .. " -e " .. editor 
 firefox 			= "firefox"
+word 				= "word"
+excel 				= "excel"
+publish 			= "publish"
+powerpoint 			= "powerpoint"
 file_explorer 			= "ranger"
 Neovim_QT 			= "nvim-qt"
 Screenshot 			= "maim ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d).png"
@@ -90,22 +94,28 @@ modkey = "Mod4"
 myawesomemenu = {
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
+   { "edit config", editor_cmd .. " " .. awesome.conffile, beautiful.edit },
    { "restart", awesome.restart },
-                                   { "open terminal", terminal },
-				   --{ "logout", function() awesome.quit() end },
-				   { "logout", logout },
-				   { "sleep", sleep },
-				   { "reboot", reboot },
-				   { "hibernate", hibernate },
-				   { "poweroff", poweroff },
+   { "open terminal", terminal },
+   --{ "logout", function() awesome.quit() end },
+   { "logout", logout, beautiful.logout },
+   { "sleep", sleep, beautiful.sleep },
+   { "reboot", reboot, beautiful.reboot },
+   { "hibernate", hibernate, beautiful.hibernate },
+   { "poweroff", poweroff, beautiful.poweroff },
 }
-
+office = {
+	{"Word", word, beautiful.word},
+	{"Excel", excel, beautiful.excel},
+	{"Powerpoint", powerpoint, beautiful.powerpoint},
+	{"Publish", publish, beautiful.publish},
+}
 mymainmenu = freedesktop.menu.build({ 
 	before = { 
-		{ "awesome", myawesomemenu, beautiful.awesome_icon },
+		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
 
 	},
+	{"office", office, beautiful.office},
 			after = {
                                   }
                         })
