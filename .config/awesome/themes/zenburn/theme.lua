@@ -14,6 +14,7 @@ local themes_path = os.getenv("HOME") .. "/.config/awesome/themes/"
 
 -- {{{ Styles
 theme.font      = "sans 8"
+theme.icon_theme = "Adwaita"
 
 -- {{{ Colors
 theme.fg_normal  = "#DCDCCC"
@@ -76,13 +77,42 @@ theme.menu_width  = dpi(100)
 -- {{{ Taglist
 theme.taglist_squares_sel   = themes_path .. "zenburn/taglist/squarefz.png"
 theme.taglist_squares_unsel = themes_path .. "zenburn/taglist/squarez.png"
-theme.bat_icon              = themes_path .. "zenburn/bat-020.png"
+-- thermo
+theme.thermometer               = themes_path .. "zenburn/icons/thermo.jpg"
+
+
+-- Battery info
+theme.bat_icon_20               = themes_path .. "zenburn/icons/bat-020.png"
+theme.bat_icon_40               = themes_path .. "zenburn/icons/bat-040.png"
+theme.bat_icon_60               = themes_path .. "zenburn/icons/bat-060.png"
+theme.bat_icon_80               = themes_path .. "zenburn/icons/bat-080.png"
+theme.bat_icon_100              = themes_path .. "zenburn/icons/bat-100.png"
+theme.bat_icon_20_charging      = themes_path .. "zenburn/icons/bat-020-charging.png"
+theme.bat_icon_40_charging      = themes_path .. "zenburn/icons/bat-040-charging.png"
+theme.bat_icon_60_charging      = themes_path .. "zenburn/icons/bat-060-charging.png"
+theme.bat_icon_80_charging      = themes_path .. "zenburn/icons/bat-080-charging.png"
+theme.bat_icon_100_charging     = themes_path .. "zenburn/icons/bat-100-charging.png"
+theme.bat_icon_charged          = themes_path .. "zenburn/icons/bat-charged.png"
 --theme.taglist_squares_resize = "false"
 -- }}}
-
+-- Office icon
+theme.office                    = themes_path .. "zenburn/icons/office.png"
+theme.word                      = themes_path .. "zenburn/icons/Word.png"
+theme.excel                     = themes_path .. "zenburn/icons/Excel.png"
+theme.access                    = themes_path .. "zenburn/icons/Access.png"
+theme.outlook                   = themes_path .. "zenburn/icons/Outlook.png"
+theme.publish                  = themes_path .. "zenburn/icons/mspub.ico"
+theme.powerpoint                    = themes_path .. "zenburn/icons/PowerPoint.png"
 -- {{{ Misc
-theme.awesome_icon           = themes_path .. "zenburn/awesome-icon.png"
-theme.menu_submenu_icon      = themes_path .. "default/submenu.png"
+theme.edit           = themes_path .. "zenburn/icons/edit.png"
+theme.hibernate           = themes_path .. "zenburn/icons/hibernate.png"
+theme.logout           = themes_path .. "zenburn/icons/logout.png"
+theme.poweroff      = themes_path .. "zenburn/icons/poweroff.png"
+theme.reboot           = themes_path .. "zenburn/icons/reboot.png"
+theme.restart        = themes_path .. "zenburn/icons/restart.png"
+theme.sleep           = themes_path .. "zenburn/icons/sleep.png"
+theme.awesome_icon           = themes_path .. "zenburn/icons/awesome-icon.png"
+theme.menu_submenu_icon      = themes_path .. "default/icons/submenu.png"
 -- }}}
 
 -- {{{ Layout
