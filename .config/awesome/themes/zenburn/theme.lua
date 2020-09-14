@@ -37,6 +37,7 @@ theme.border_color_marked = "#CC9393"
 -- {{{ Titlebars
 theme.titlebar_bg_focus  = "#3F3F3F"
 theme.titlebar_bg_normal = "#3F3F3F"
+theme.tasklist_disable_task_name = true
 -- }}}
 
 -- There are other variable sets
