@@ -31,11 +31,11 @@ local function factory(args)
     }
 
     local args       = args or {}
-    local timeout    = args.timeout or 5
+    local timeout    = args.timeout or 1
     local settings   = args.settings or function() end
-    local width      = args.width or 63
-    local height     = args.height or 1
-    local margins    = args.margins or 1
+    local width      = args.width or 50
+    local height     = args.height or 20
+    local margins    = args.margins or 3
     local paddings   = args.paddings or 1
     local ticks      = args.ticks or false
     local ticks_size = args.ticks_size or 7

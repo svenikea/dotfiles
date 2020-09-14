@@ -22,6 +22,8 @@ local query_free = Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE
 local query_used = Gio.FILE_ATTRIBUTE_FILESYSTEM_USED
 local query      = query_size .. "," .. query_free .. "," .. query_used
 
+local lain = require("lain")
+local markup = lain.util.markup
 -- File systems info
 -- lain.widget.fs
 
@@ -34,7 +36,9 @@ local function factory(args)
             [7] = "Zb", [8] = "Yb"
         }
     }
-
+    local icon_dir = os.getenv("HOME") .. "/.config/awesome/themes/zenburn/icons/"
+	fs.icon_locate = icon_dir .. "hdd.png"
+	fs.icon = wibox.widget.imagebox(fs.icon_locate)
     function fs.hide()
         if not fs.notification then return end
         naughty.destroy(fs.notification)
@@ -51,29 +55,36 @@ local function factory(args)
     end
 
     local args      = args or {}
-    local timeout   = args.timeout or 600
+    local timeout   = args.timeout or 1
     local partition = args.partition
     local threshold = args.threshold or 99
-    local showpopup = args.showpopup or "on"
+    local showpopup = "on"
     local settings  = args.settings or function() end
+    local notify 	= args.notify or "on"
+    local cover_size = args.cover_size or 100
 
     fs.followtag           = args.followtag or false
     fs.notification_preset = args.notification_preset
 
     if not fs.notification_preset then
         fs.notification_preset = {
-            font = "Monospace 10",
+            font = "terminus 10",
             fg   = "#FFFFFF",
             bg   = "#000000"
         }
     end
-
+	function round(x, n)
+		n = math.pow(10, n or 0)
+    		x = x * n
+		if x >= 0 then x = math.floor(x + 0.5) else x = math.ceil(x - 0.5) 
+		end
+	return x / n
+end
     function fs.update()
-        local notifytable = { [1] = string.format("%-10s %4s\t%6s\t%6s\t\n", "path", "used", "free", "size") }
         local pathlen = 10
-        local maxpathidx = 1
         fs_now = {}
 
+        local notifypaths = {}
         for _, mount in ipairs(Gio.unix_mounts_get()) do
             local path = Gio.unix_mount_get_mount_path(mount)
             local root = Gio.File.new_for_path(path)
@@ -90,19 +101,16 @@ local function factory(args)
                     fs_now[path] = {
                         units      = fs.units[units],
                         percentage = math.floor(100 * used / size), -- used percentage
-                        size       = size / math.pow(1024, math.floor(units)),
-                        used       = used / math.pow(1024, math.floor(units)),
-                        free       = free / math.pow(1024, math.floor(units))
+                        size       = round(size / math.pow(1024, units),2),
+                        used       = round(used / math.pow(1024, units),2),
+                        free       = round(free / math.pow(1024, units),2)
                     }
 
                     if fs_now[path].percentage > 0 then -- don't notify unused file systems
-                        notifytable[#notifytable+1] = string.format("\n%-10s %3s%%\t%6.2f\t%6.2f\t%s", path,
-                        math.floor(fs_now[path].percentage), fs_now[path].free, fs_now[path].size,
-                        fs_now[path].units)
+                        notifypaths[#notifypaths+1] = path
 
                         if #path > pathlen then
                             pathlen = #path
-                            maxpathidx = #notifytable
                         end
                     end
                 end
@@ -111,7 +119,7 @@ local function factory(args)
 
         widget = fs.widget
         settings()
-
+	widget:set_markup(markup.font("sans 8", " " .. "Home: " .. fs_now["/home"].free .. " " .. fs_now["/"].units .. " | " .. "Root: " .. fs_now["/"].free .. " " .. fs_now["/"].units))
         if partition and fs_now[partition] and fs_now[partition].percentage >= threshold then
             if not helpers.get_map(partition) then
                 naughty.notify {
@@ -125,23 +133,20 @@ local function factory(args)
             end
         end
 
-        if pathlen > 10 then -- if are there paths longer than 10 chars, reformat first column accordingly
-            local pathspaces
-            for i = 1, #notifytable do
-                pathspaces = notifytable[i]:match("[ ]+")
-                if i ~= maxpathidx and pathspaces then
-                    notifytable[i] = notifytable[i]:gsub(pathspaces, pathspaces .. string.rep(" ", pathlen - 10))
-                end
-            end
+        local fmt = "%-" .. tostring(pathlen) .. "s %4s\t%6s\t%6s\n"
+        local notifytable = { [1] = string.format(fmt, "path", "used", "free", "size") }
+        fmt = "\n%-" .. tostring(pathlen) .. "s %3s%%\t%6.2f\t%6.2f %s"
+        for _, path in ipairs(notifypaths) do
+            notifytable[#notifytable+1] = string.format(fmt, path, fs_now[path].percentage, fs_now[path].free, fs_now[path].size, fs_now[path].units)
         end
 
         fs.notification_preset.text = tconcat(notifytable)
     end
 
-    if showpopup == "on" then
-       fs.widget:connect_signal('mouse::enter', function () fs.show(0) end)
-       fs.widget:connect_signal('mouse::leave', function () fs.hide() end)
-    end
+    --if showpopup == "on" then
+     --  fs.widget:connect_signal('mouse::enter', function () fs.show(0) end)
+     --  fs.widget:connect_signal('mouse::leave', function () fs.hide() end)
+    --end
 
     helpers.newtimer(partition or "fs", timeout, fs.update)
 

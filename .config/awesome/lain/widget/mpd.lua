@@ -15,6 +15,8 @@ local wibox    = require("wibox")
 local os       = os
 local string   = string
 
+local lain = require("lain")
+local markup = lain.util.markup
 -- MPD infos
 -- lain.widget.mpd
 

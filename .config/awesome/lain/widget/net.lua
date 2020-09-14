@@ -11,31 +11,37 @@ local naughty = require("naughty")
 local wibox   = require("wibox")
 local string  = string
 
+local lain = require("lain")
+local markup = lain.util.markup
 -- Network infos
 -- lain.widget.net
 
 local function factory(args)
     local net        = { widget = wibox.widget.textbox(), devices = {} }
     local args       = args or {}
-    local timeout    = args.timeout or 2
+    local timeout    = args.timeout or 1
     local units      = args.units or 1024 -- KB
     local notify     = args.notify or "on"
-    local wifi_state = args.wifi_state or "off"
-    local eth_state  = args.eth_state or "off"
+    local wifi_state = args.wifi_state or "on"
+    local eth_state  = args.eth_state or "on"
     local screen     = args.screen or 1
     local settings   = args.settings or function() end
 
+    local icon_dir = os.getenv("HOME") .. "/.config/awesome/themes/zenburn/icons/"
+    net.icon_path = icon_dir .. "net.png"
+    net.icon 	   = wibox.widget.imagebox(net.icon_path)
     -- Compatibility with old API where iface was a string corresponding to 1 interface
     net.iface = (args.iface and (type(args.iface) == "string" and {args.iface}) or
                 (type(args.iface) == "table" and args.iface)) or {}
 
-    function net.get_device()
+    function net.get_devices()
+        net.iface = {} -- reset at every call
         helpers.line_callback("ip link", function(line)
             net.iface[#net.iface + 1] = not string.match(line, "LOOPBACK") and string.match(line, "(%w+): <") or nil
         end)
     end
 
-    if #net.iface == 0 then net.get_device() end
+    if #net.iface == 0 then net.get_devices() end
 
     function net.update()
         -- These are the totals over all specified interfaces
@@ -103,6 +109,9 @@ local function factory(args)
 
         widget = net.widget
         settings()
+	widget:set_markup(markup.font("sans 8",
+        	markup("#7AC82E", " " .. string.format("%06.1f", net_now.received))
+                          .. " " .. markup("#46A8C3", " " .. string.format("%06.1f", net_now.sent) .. " ")))
     end
 
     helpers.newtimer("network", timeout, net.update)

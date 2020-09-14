@@ -14,11 +14,14 @@ local math     = math
 local string   = string
 local ipairs   = ipairs
 local tonumber = tonumber
+local lain = require("lain")
+local markup = lain.util.markup
 
 local beautiful = require("beautiful")
 -- Battery infos
 -- lain.widget.bat
 
+local baticon = wibox.widget.imagebox("/home/john/.config/awesome/themes/zenburn/icons/battery.png")
 local function factory(args)
     local pspath = args.pspath or "/sys/class/power_supply/"
 
@@ -29,16 +32,20 @@ local function factory(args)
 
     local bat         = { widget = wibox.widget.textbox() }
     local args        = args or {}
-    local timeout     = args.timeout or 1
+    local timeout     = args.timeout or 30
     local notify      = args.notify or "on"
     local full_notify = args.full_notify or notify
     local n_perc      = args.n_perc or { 5, 15 }
     local batteries   = args.batteries or (args.battery and {args.battery}) or {}
     local ac          = args.ac or "AC0"
     local settings    = args.settings or function() end
-    --local icon_dir = os.getenv("HOME") .. "/.config/awesome/themes/zenburn/icons/"
-    --bat.icon_path = icon_dir .. "thermo.svg"
-    local icon 	      = wibox.widget.imagebox()
+    local icon_dir = os.getenv("HOME") .. "/.config/awesome/themes/zenburn/icons/"
+    bat.ac = icon_dir .. "ac.png"
+    bat.low = icon_dir .. "battery_low.png"
+    bat.empty = icon_dir .. "battery_empty.png"
+    bat.bat = icon_dir .. "battery.png"
+    bat.icon = wibox.widget.imagebox(bat.bat)
+
     function bat.get_batteries()
         helpers.line_callback("ls -1 " .. pspath, function(line)
             local bstr =  string.match(line, "BAT%w+")
@@ -186,14 +193,22 @@ local function factory(args)
 
         widget = bat.widget
         settings()
---	if (tonumber(bat_now.perc) >=1 and tonumber(bat_now.perc)<=20) then 
---		bat.icon = wibox.widget.imagebox(beautiful.bat_icon_20)
---		elseif (tonumber(bat_now.perc) >=21 and tonumber(bat_now.perc)<=40) then
---			bat.icon = wibox.widget.imagebox(beautiful.bat_icon_40)
---			elseif (tonumber(bat_now.perc) >=41 and tonumber(bat_now.perc)<=60) then
---				bat.icon = wibox.widget.imagebox(beautiful.bat_icon_60)
---	widget:set_image(beautiful.bat_icon_60)
-	widget:set_markup(bat_now.perc .. " %")
+	if bat_now.status and bat_now.status ~= "N/A" then
+		if bat_now.ac_status == 1 then
+           	elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then
+			baticon:set_image(bat.empty)
+            	elseif not bat_now.perc and tonumber(bat_now.perc) <= 15 then
+                	baticon:set_image(bat.low)
+            	else
+                	baticon:set_image(bat.battery)
+            	end
+            		widget:set_markup(markup.font("sans 8", " " .. bat_now.perc .. "% "))
+        else
+            widget:set_markup(markup.font("sans 8", " AC "))
+            baticon:set_image(bat.ac)
+        end
+
+--	widget:set_markup(bat_now.perc .. " %")
         -- notifications for critical, low, and full levels
         if notify == "on" then
             if bat_now.status == "Discharging" then

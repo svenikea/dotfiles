@@ -20,7 +20,7 @@ local function factory(args)
     local settings = args.settings or function() end
 
     local icon_dir = os.getenv("HOME") .. "/.config/awesome/themes/zenburn/icons/"
-    temp.icon_path = icon_dir .. "thermo.svg"
+    temp.icon_path = icon_dir .. "temp.png"
     temp.icon 	   = wibox.widget.imagebox(temp.icon_path)
     function temp.update()
         helpers.async({"find", "/sys/devices", "-type", "f", "-name", "*temp*"}, function(f)
