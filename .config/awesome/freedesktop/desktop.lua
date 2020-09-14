@@ -74,6 +74,7 @@ end
 -- @param onclick function to execute on click
 function desktop.add_single_icon(args, label, icon, onclick)
     local s = args.screen
+
     -- define icon dimensions and position
     if not desktop_current_pos[s] then
         desktop_current_pos[s] = { x = (capi.screen[s].geometry.x + args.iconsize.width + args.margin.x), y = 40 }
@@ -243,7 +244,7 @@ function desktop.add_icons(args)
     -- trying to fallback on Adwaita if theme.icon_theme is not defined
     -- if Adwaita is missing too, no icons will be shown
     if not theme.icon_theme then
-        theme.icon_theme = args.icon_theme or "Arc"
+        theme.icon_theme = args.icon_theme or "Adwaita"
     end
 
     desktop.add_base_icons(args)
