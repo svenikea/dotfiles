@@ -17,6 +17,7 @@ local naughty = require("naughty")
 local ruled = require("ruled")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -44,6 +45,10 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/zenburn/theme.lua")
 -- This is used later as the default terminal and editor to run.
 
 terminal 			= "kitty"
+word 		 		= "word"
+excel 				= "excel"
+publish 			= "publish"
+powerpoint 			= "powerpoint"
 editor 				= os.getenv("EDITOR") or "nvim"
 editor_cmd 			= terminal .. " -e " .. editor 
 firefox 			= "firefox"
@@ -55,7 +60,6 @@ file_explorer 			= "ranger"
 Neovim_QT 			= "nvim-qt"
 Screenshot 			= "maim ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d).png"
 --wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
-transparency 			= "picom --experimental-backends"
 wallpaper 			= "feh --recursive --bg-fill --randomize ~/Pictures/wallpapers/"
 dmenu 				= "dmenu_run"
 chrome 				= "google-chrome-stable"
@@ -66,9 +70,8 @@ pdfReader 			= "xreader"
 volume_up 			= "amixer -D pulse set Master 2%+"
 volume_down 			= "amixer -D pulse set Master 2%-"
 volume_toggle 			= "amixer -D pulse set Master toggle"
-brightness_up 			= "xbacklight -inc 5"
-brightness_down 		= "xbacklight -dec 5"
-power_management 		= "tlp start"
+brightness_up 			= "xbacklight -inc 2"
+brightness_down 		= "xbacklight -dec 2"
 lid_operation 			= "light-locker --lock-on-suspend"
 logout 				= "light-locker-command -l"
 -- System operation
@@ -111,11 +114,13 @@ office = {
 	{"Publish", publish, beautiful.publish},
 }
 mymainmenu = freedesktop.menu.build({ 
+	icon_size = beautiful.menu_height or dpi(16),
 	before = { 
-		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
+		{ "Awesome", myawesomemenu, beautiful.awesome_icon },	
+		{"Office", office, beautiful.office},
 
 	},
-	{"office", office, beautiful.office},
+
 			after = {
                                   }
                         })
@@ -229,10 +234,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-	    --lain.widget.net().icon,
-	    --lain.widget.net(),
+	    --lain.widget.mpd().icon,
+	    --lain.widget.mpd(),
+	    lain.widget.fs().icon,
+	    lain.widget.fs({}),
+	    wibox.widget.textbox(" "), 
 	    lain.widget.temp().icon,
-	    lain.widget.temp(),
+	    lain.widget.temp().widget,
 	    wibox.widget.textbox(" "), 
 	    lain.widget.mem().icon,
 	    lain.widget.mem(),
@@ -240,13 +248,17 @@ screen.connect_signal("request::desktop_decoration", function(s)
 	    lain.widget.cpu().icon,
 	    lain.widget.cpu(),
 	    wibox.widget.textbox(" "),
-	    lain.widget.bat({}),
+	    lain.widget.bat({}).icon,
+	    lain.widget.bat({}).widget,
 	    wibox.widget.textbox(" "),
-	    wibox.widget.textbox("-"),
-	    lain.widget.alsabar({}).bar,
-	    wibox.widget.textbox("+"),
+	    lain.widget.alsa().icon,
+	    lain.widget.alsa(),
 	    wibox.widget.textbox(" "),
-            mytextclock,
+	    lain.widget.net().icon,
+	    lain.widget.net().widget,
+	    wibox.widget.textbox(" "),
+            mytextclock,	   
+	    wibox.widget.textbox(" "),
         },
     }
 end)
@@ -635,6 +647,4 @@ end)
 -- }}}
 
 awful.spawn.with_shell(wallpaper)
-awful.spawn.with_shell(transparency)
-awful.util.spawn_with_shell(power_management)
 awful.util.spawn_with_shell(lid_operation)
