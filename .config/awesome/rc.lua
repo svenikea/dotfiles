@@ -12,7 +12,7 @@ local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
-local naughty = require("naughty")
+--local naughty = require("naughty")
 -- Declarative object management
 local ruled = require("ruled")
 local menubar = require("menubar")
@@ -25,17 +25,17 @@ require("awful.hotkeys_popup.keys")
 local freedesktop = require("freedesktop")
 local lain = require("lain")
 local markup = lain.util.markup
-local icon
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
-naughty.connect_signal("request::display_error", function(message, startup)
-    naughty.notification {
-        urgency = "critical",
-        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
-        message = message
-    }
-end)
+--naughty.connect_signal("request::display_error", function(message, startup)
+--    naughty.notification {
+--        urgency = "critical",
+--        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
+--        message = message
+ --   }
+--end)
 -- }}}
 
 -- {{{ Variable definitions
@@ -53,6 +53,7 @@ editor 				= os.getenv("EDITOR") or "nvim"
 editor_cmd 			= terminal .. " -e " .. editor 
 firefox 			= "firefox"
 word 				= "word"
+file_explorer_gui 		= "spacefm"
 excel 				= "excel"
 publish 			= "publish"
 powerpoint 			= "powerpoint"
@@ -142,8 +143,6 @@ tag.connect_signal("request::default_layouts", function()
 end)
 -- }}}
 
--- {{{ Wibar
-
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
@@ -161,6 +160,57 @@ screen.connect_signal("request::wallpaper", function(s)
         gears.wallpaper.maximized(wallpaper, s, true)
     end
 end)
+-- Widget bar 
+-- Battery ---------------------------------------------
+local baticon = wibox.widget.imagebox(beautiful.bat)
+local bat_widget = lain.widget.bat({
+	settings = function ()
+	if bat_now.status and bat_now.status ~= "N/A" then
+		if (bat_now.perc >= 10 and bat_now.perc <=20) then
+			widget:set_markup(markup.font(font, " " .. bat_now.perc .. "% "))
+			baticon:set_image(beautiful.bat_icon_20)
+		end
+		if (bat_now.perc >= 21 and bat_now.perc <=40) then
+			widget:set_markup(markup.font(font, " " .. bat_now.perc .. "% "))
+			baticon:set_image(beautiful.bat_icon_40)
+		end
+		if (bat_now.perc >= 41 and bat_now.perc <=60) then
+			widget:set_markup(markup.font(font, " " .. bat_now.perc .. "% "))
+			baticon:set_image(beautiful.bat_icon_60)
+		end
+		if (bat_now.perc >= 61 and bat_now.perc <=80) then
+			widget:set_markup(markup.font(font, " " .. bat_now.perc .. "% "))
+			baticon:set_image(beautiful.bat_icon_80)
+		end
+		if (bat_now.perc >= 81 and bat_now.perc <=100) then
+			widget:set_markup(markup.font(font, " " .. bat_now.perc .. "% "))
+			baticon:set_image(beautiful.bat_icon_100)
+		end
+	end
+	if bat_now.status == "Charging" then
+		widget:set_markup(markup.font(font, " AC " .. bat_now.perc .. " %"))
+		baticon:set_image(beautiful.ac)
+        end
+	if bat_now.status == "Full" then
+            widget:set_markup(markup.font(font, " Full charged "))
+	    baticon:set_image(beautiful.bat_icon_charged)
+	end
+	end,
+
+})
+	
+local fs_icon = lain.widget.fs().icon
+local fs = lain.widget.fs({})
+local temp_icon = lain.widget.temp().icon
+local temp = lain.widget.temp().widget
+local mem = lain.widget.mem()
+local mem_icon = lain.widget.mem().icon
+local cpu = lain.widget.cpu()
+local cpu_icon = lain.widget.cpu().icon
+local alsa = lain.widget.alsa()
+local alsa_icon = lain.widget.alsa().icon
+local net = lain.widget.net().widget
+local net_icon = lain.widget.net().icon
 
 screen.connect_signal("request::desktop_decoration", function(s)
     -- Each screen has its own tag table.
@@ -234,28 +284,26 @@ screen.connect_signal("request::desktop_decoration", function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-	    --lain.widget.mpd().icon,
-	    --lain.widget.mpd(),
-	    lain.widget.fs().icon,
-	    lain.widget.fs({}),
+	    fs_icon,
+	    fs,
 	    wibox.widget.textbox(" "), 
-	    lain.widget.temp().icon,
-	    lain.widget.temp().widget,
+	    temp_icon,
+	    temp,
 	    wibox.widget.textbox(" "), 
-	    lain.widget.mem().icon,
-	    lain.widget.mem(),
+	    mem_icon,
+	    mem,
 	    wibox.widget.textbox(" "),
-	    lain.widget.cpu().icon,
-	    lain.widget.cpu(),
+	    cpu_icon,
+	    cpu,
 	    wibox.widget.textbox(" "),
-	    lain.widget.bat({}).icon,
-	    lain.widget.bat({}).widget,
+	    baticon,
+	    bat_widget,
 	    wibox.widget.textbox(" "),
-	    lain.widget.alsa().icon,
-	    lain.widget.alsa(),
+	    alsa_icon,
+	    alsa,
 	    wibox.widget.textbox(" "),
-	    lain.widget.net().icon,
-	    lain.widget.net().widget,
+	    net_icon,
+	    net,
 	    wibox.widget.textbox(" "),
             mytextclock,	   
 	    wibox.widget.textbox(" "),
@@ -288,6 +336,8 @@ awful.keyboard.append_global_keybindings({
 --- {{ Application launcher
     awful.key({modkey, },"c", function () awful.spawn(chrome)end ,
     {description = "open chrome", group = "launcher"}),
+    awful.key({modkey, },"f", function () awful.spawn(file_explorer_gui)end ,
+    {description = "open spacefm", group = "launcher"}),
     awful.key({modkey, },"d", function () awful.spawn(pdfReader)end ,
     {description = "open PDF reader", group = "launcher"}),
     awful.key({modkey, }, "b", function () awful.spawn(firefox)end ,
@@ -633,9 +683,9 @@ ruled.notification.connect_signal('request::rules', function()
     }
 end)
 
-naughty.connect_signal("request::display", function(n)
-    naughty.layout.box { notification = n }
-end)
+--naughty.connect_signal("request::display", function(n)
+--    naughty.layout.box { notification = n }
+--end)
 
 -- }}}
 
@@ -647,4 +697,5 @@ end)
 -- }}}
 
 awful.spawn.with_shell(wallpaper)
-awful.util.spawn_with_shell(lid_operation)
+awful.util.spawn_with_shell(lid_operation)		
+--awful.util.spawn_with_shell("dunst -conf /home/john/.config/dunst/dunstrc")
