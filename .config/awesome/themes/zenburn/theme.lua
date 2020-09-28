@@ -17,12 +17,19 @@ theme.font      = "sans 8"
 theme.icon_theme = "Adwaita"
 
 -- {{{ Colors
-theme.fg_normal  = "#DCDCCC"
-theme.fg_focus   = "#F0DFAF"
-theme.fg_urgent  = "#CC9393"
-theme.bg_normal  = "#3F3F3F"
-theme.bg_focus   = "#1E2320"
-theme.bg_urgent  = "#3F3F3F"
+theme.fg_normal                                 = "#FEFEFE"
+theme.fg_focus                                  = "#32D6FF"
+theme.fg_urgent                                 = "#C83F11"
+theme.bg_normal                                 = "#222222"
+theme.bg_focus                                  = "#1E2320"
+theme.bg_urgent                                 = "#3F3F3F"
+theme.taglist_fg_focus                          = "#00CCFF"
+theme.tasklist_bg_focus                         = "#222222"
+theme.tasklist_fg_focus                         = "#00CCFF"
+
+theme.border_normal                             = "#3F3F3F"
+theme.border_focus                              = "#6F6F6F"
+theme.border_marked                             = "#CC9393"
 theme.bg_systray = theme.bg_normal
 -- }}}
 
@@ -94,6 +101,8 @@ theme.bat_icon_60_charging      = themes_path .. "zenburn/icons/bat-060-charging
 theme.bat_icon_80_charging      = themes_path .. "zenburn/icons/bat-080-charging.png"
 theme.bat_icon_100_charging     = themes_path .. "zenburn/icons/bat-100-charging.png"
 theme.bat_icon_charged          = themes_path .. "zenburn/icons/bat-charged.png"
+theme.bat                       = themes_path .. "zenburn/icons/battery.png"
+theme.ac                        = themes_path .. "zenburn/icons/ac.png"
 --theme.taglist_squares_resize = "false"
 -- }}}
 -- Office icon
