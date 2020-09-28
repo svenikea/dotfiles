@@ -16,12 +16,11 @@ local ipairs   = ipairs
 local tonumber = tonumber
 local lain = require("lain")
 local markup = lain.util.markup
-
+local font 	= "sans 8"
 local beautiful = require("beautiful")
 -- Battery infos
 -- lain.widget.bat
 
-local baticon = wibox.widget.imagebox("/home/john/.config/awesome/themes/zenburn/icons/battery.png")
 local function factory(args)
     local pspath = args.pspath or "/sys/class/power_supply/"
 
@@ -29,24 +28,16 @@ local function factory(args)
         naughty.notify { text = "lain.widget.bat: invalid power supply path", timeout = 0 }
         return
     end
-
     local bat         = { widget = wibox.widget.textbox() }
     local args        = args or {}
-    local timeout     = args.timeout or 30
-    local notify      = args.notify or "on"
-    local full_notify = args.full_notify or notify
+    local timeout     = args.timeout or 1
+
     local n_perc      = args.n_perc or { 5, 15 }
     local batteries   = args.batteries or (args.battery and {args.battery}) or {}
     local ac          = args.ac or "AC0"
     local settings    = args.settings or function() end
     local icon_dir = os.getenv("HOME") .. "/.config/awesome/themes/zenburn/icons/"
-    bat.ac = icon_dir .. "ac.png"
-    bat.low = icon_dir .. "battery_low.png"
-    bat.empty = icon_dir .. "battery_empty.png"
-    bat.bat = icon_dir .. "battery.png"
-    bat.icon = wibox.widget.imagebox(bat.bat)
-
-    function bat.get_batteries()
+       function bat.get_batteries()
         helpers.line_callback("ls -1 " .. pspath, function(line)
             local bstr =  string.match(line, "BAT%w+")
             if bstr then
@@ -59,31 +50,7 @@ local function factory(args)
 
     if #batteries == 0 then bat.get_batteries() end
 
-    bat_notification_critical_preset = {
-        title   = "Battery exhausted",
-        text    = "Shutdown imminent",
-        timeout = 15,
-        fg      = "#000000",
-        bg      = "#FFFFFF"
-    }
-
-    bat_notification_low_preset = {
-        title   = "Battery low",
-        text    = "Plug the cable!",
-        timeout = 15,
-        fg      = "#202020",
-        bg      = "#CDCDCD"
-    }
-
-    bat_notification_charged_preset = {
-        title   = "Battery full",
-        text    = "You can unplug the cable",
-        timeout = 15,
-        fg      = "#202020",
-        bg      = "#CDCDCD"
-    }
-
-    bat_now = {
+   bat_now = {
         status    = "N/A",
         ac_status = "N/A",
         perc      = "N/A",
@@ -99,7 +66,7 @@ local function factory(args)
     end
 
     -- used to notify full charge only once before discharging
-    local fullnotification = false
+
 
     function bat.update()
         local sum_rate_current = 0
@@ -193,45 +160,10 @@ local function factory(args)
 
         widget = bat.widget
         settings()
-	if bat_now.status and bat_now.status ~= "N/A" then
-		if bat_now.ac_status == 1 then
-           	elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then
-			baticon:set_image(bat.empty)
-            	elseif not bat_now.perc and tonumber(bat_now.perc) <= 15 then
-                	baticon:set_image(bat.low)
-            	else
-                	baticon:set_image(bat.battery)
-            	end
-            		widget:set_markup(markup.font("sans 8", " " .. bat_now.perc .. "% "))
-        else
-            widget:set_markup(markup.font("sans 8", " AC "))
-            baticon:set_image(bat.ac)
-        end
 
---	widget:set_markup(bat_now.perc .. " %")
-        -- notifications for critical, low, and full levels
-        if notify == "on" then
-            if bat_now.status == "Discharging" then
-                if tonumber(bat_now.perc) <= n_perc[1] then
-                    bat.id = naughty.notify({
-                        preset = bat_notification_critical_preset,
-                        replaces_id = bat.id
-                    }).id
-                elseif tonumber(bat_now.perc) <= n_perc[2] then
-                    bat.id = naughty.notify({
-                        preset = bat_notification_low_preset,
-                        replaces_id = bat.id
-                    }).id
-                end
-                fullnotification = false
-            elseif bat_now.status == "Full" and full_notify == "on" and not fullnotification then
-                bat.id = naughty.notify({
-                    preset = bat_notification_charged_preset,
-                    replaces_id = bat.id
-                }).id
-                fullnotification = true
-            end
-        end
+
+
+
     end
 
     helpers.newtimer("batteries", timeout, bat.update)
