@@ -113,4 +113,15 @@ fi
 # Add neovim to yarn at global env
 yarn global add neovim
 
+# Enable tap to click on touchpad
+sudo mkdir -p /etc/X11/xorg.conf.d && sudo tee <<'EOF' /etc/X11/xorg.conf.d/90-touchpad.conf 1> /dev/null
+Section "InputClass"
+        Identifier "touchpad"
+        MatchIsTouchpad "on"
+        Driver "libinput"
+        Option "Tapping" "on"
+        Option "TappingButtonMap" "lrm"
+EndSection
+
+EOF
 echo "Remember to reload AwesomeWM with the combo press Ctrl+Windows_keys+r after all of this is completed"
