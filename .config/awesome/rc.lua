@@ -60,6 +60,7 @@ powerpoint 			= "powerpoint"
 file_explorer 			= "ranger"
 Neovim_QT 			= "nvim-qt"
 Screenshot 			= "maim ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d).png"
+snapshot 			= "import ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d).png"
 --wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
 wallpaper 			= "feh --recursive --bg-fill --randomize ~/Pictures/wallpapers/"
 dmenu 				= "dmenu_run"
@@ -332,6 +333,7 @@ awful.keyboard.append_global_keybindings({
    awful.key({}, "XF86MonBrightnessUp", function() os.execute(brightness_up) end, {description = "brightness up", group = "screen"}),
    awful.key({}, "XF86MonBrightnessDown", function() os.execute(brightness_down) end, {description = "brightness down", group = "screen"}),
    awful.key({}, "Print", function() awful.spawn.with_shell(Screenshot) end, {description = "screenshot", group = "screen"}),
+   awful.key({}, "F1", function() awful.spawn.with_shell(snapshot) end, {description = "snapshot", group = "screen"}),
 
 --- {{ Application launcher
     awful.key({modkey, },"c", function () awful.spawn(chrome)end ,
