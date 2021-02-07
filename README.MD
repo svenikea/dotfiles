@@ -25,3 +25,5 @@ https://dotfiles.github.io/
 [Arch Linux](https://wiki.archlinux.org/) - the Arch Wiki Pages
 
 [junngunn](https://github.com/junegunn/vim-plug) - for the Vim plugin manager
+
+[Aditya Shakya](https://github.com/adi1090x/rofi) - for the rofi themes
