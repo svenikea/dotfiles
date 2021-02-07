@@ -10,12 +10,13 @@ local dpi = require("beautiful.xresources").apply_dpi
 -- {{{ Main
 local theme = {}
 local themes_path = os.getenv("HOME") .. "/.config/awesome/themes/"
+local system_path = "/usr/share/icons/hicolor/"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "sans 8"
+theme.font      = "sans 10"
 theme.icon_theme = "Adwaita"
-
+theme.notification_font = "sans 10"
 -- {{{ Colors
 theme.fg_normal                                 = "#FEFEFE"
 theme.fg_focus                                  = "#32D6FF"
@@ -77,8 +78,8 @@ theme.mouse_finder_color = "#CC9393"
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_height = dpi(15)
-theme.menu_width  = dpi(100)
+theme.menu_height = dpi(25)
+theme.menu_width  = dpi(200)
 -- }}}
 
 -- {{{ Icons
@@ -122,7 +123,9 @@ theme.reboot           = themes_path .. "zenburn/icons/reboot.png"
 theme.restart        = themes_path .. "zenburn/icons/restart.png"
 theme.sleep           = themes_path .. "zenburn/icons/sleep.png"
 theme.awesome_icon           = themes_path .. "zenburn/icons/awesome-icon.png"
-theme.menu_submenu_icon      = themes_path .. "default/icons/submenu.png"
+theme.hotkeys           = themes_path .. "zenburn/icons/hotkeys.png"
+theme.manual            = themes_path .. "zenburn/icons/manual.png"
+theme.menu_submenu_icon      = themes_path .. "zenburn/icons/submenu.png"
 -- }}}
 
 -- {{{ Layout
@@ -143,7 +146,25 @@ theme.layout_cornerne   = themes_path .. "zenburn/layouts/cornerne.png"
 theme.layout_cornersw   = themes_path .. "zenburn/layouts/cornersw.png"
 theme.layout_cornerse   = themes_path .. "zenburn/layouts/cornerse.png"
 -- }}}
-
+-- System icon
+theme.firefox_icon = "/usr/lib/firefox/browser/chrome/icons/default/default16.png"
+theme.terminal_icon = system_path .. "/128x128/apps/lxterminal.png"
+theme.thunar_icon = system_path .. "/128x128/apps/org.xfce.thunar.png"
+theme.evince_icon = system_path .. "/128x128/apps/evincelogo.png"
+theme.neovim_icon = "/usr/share/pixmaps/nvim.png"
+theme.firefox_icon = system_path .. "/128x128/apps/firefox.png"
+theme.chrome_icon = system_path .. "128x128/apps/google-chrome.png"
+theme.wpa_icon = "/usr/share/pixmaps/wpa_gui.svg"
+theme.pamac_icon = system_path .. "/48x48/apps/system-software-install.svg"
+theme.internet = themes_path .. "zenburn/icons/world.png"
+theme.settings = themes_path .. "zenburn/icons/settings.png"
+theme.accessories = themes_path .. "zenburn/icons/accessories.png"
+theme.exit = themes_path .. "zenburn/icons/exit.png"
+theme.system_tools = themes_path .. "zenburn/icons/system_tools.png"
+theme.stacer_icon = system_path .. "/32x32/apps/stacer.png"
+theme.update_icon = system_path .. "/scalable/status/pamac-tray-update.svg"
+theme.xfce4_icon = system_path .. "/128x128/apps/org.xfce.about.png"
+theme.virt_manager_icon = system_path .. "/48x48/apps/virt-manager.png"
 -- {{{ Titlebar
 theme.titlebar_close_button_focus  = themes_path .. "zenburn/titlebar/close_focus.png"
 theme.titlebar_close_button_normal = themes_path .. "zenburn/titlebar/close_normal.png"
