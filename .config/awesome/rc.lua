@@ -12,7 +12,7 @@ local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
---local naughty = require("naughty")
+local naughty = require("naughty")
 -- Declarative object management
 local ruled = require("ruled")
 local menubar = require("menubar")
@@ -22,20 +22,20 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 -- Initial launcher
-local freedesktop = require("freedesktop")
+--local freedesktop = require("freedesktop")
 local lain = require("lain")
 local markup = lain.util.markup
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
---naughty.connect_signal("request::display_error", function(message, startup)
---    naughty.notification {
---        urgency = "critical",
---        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
---        message = message
- --   }
---end)
+naughty.connect_signal("request::display_error", function(message, startup)
+    naughty.notification {
+        urgency = "critical",
+        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
+        message = message
+    }
+end)
 -- }}}
 
 -- {{{ Variable definitions
@@ -44,7 +44,8 @@ local markup = lain.util.markup
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/zenburn/theme.lua")
 -- This is used later as the default terminal and editor to run.
 
-terminal 			= "kitty"
+terminal 			= "lxterminal"
+--terminal 			= "kitty"
 word 		 		= "word"
 excel 				= "excel"
 publish 			= "publish"
@@ -53,29 +54,36 @@ editor 				= os.getenv("EDITOR") or "nvim"
 editor_cmd 			= terminal .. " -e " .. editor 
 firefox 			= "firefox"
 word 				= "word"
-file_explorer_gui 		= "spacefm"
+file_explorer_gui 		= "thunar"
+file_explorer_setting 		= "thunar-settings"
 excel 				= "excel"
+stacer 				= "stacer"
 publish 			= "publish"
 powerpoint 			= "powerpoint"
 file_explorer 			= "ranger"
-Neovim_QT 			= "nvim-qt"
+Neovim				= "nvim"
+software_update 		= "pamac-manager --updates"
+software_center 		= "pamac-manager"
+rename 				= "thunar --bulk-rename"
 Screenshot 			= "maim ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d).png"
 snapshot 			= "import ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d).png"
 --wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
 wallpaper 			= "feh --recursive --bg-fill --randomize ~/Pictures/wallpapers/"
-dmenu 				= "dmenu_run"
+run_box 			= "rofi -modi drun,run -show drun -show-icons"
 chrome 				= "google-chrome-stable"
 compton 			= "compton --config ~/.config/compton/compton.conf"
-pdfReader 			= "xreader"
-
+wpa_gui 			= "wpa_gui"
+pdfReader 			= "evince"
+xfce_about 			= "xfce4-about"
+virt_manager 			= "virt-manager"
 -- Utility 
 volume_up 			= "amixer -D pulse set Master 2%+"
 volume_down 			= "amixer -D pulse set Master 2%-"
 volume_toggle 			= "amixer -D pulse set Master toggle"
-brightness_up 			= "xbacklight -inc 2"
-brightness_down 		= "xbacklight -dec 2"
+brightness_up 			= "xbacklight -inc 1"
+brightness_down 		= "xbacklight -dec 1"
+logout 				= "dm-tool lock"
 lid_operation 			= "light-locker --lock-on-suspend"
-logout 				= "light-locker-command -l"
 -- System operation
 sleep 				= "systemctl suspend"
 reboot 				= "systemctl reboot"
@@ -97,35 +105,76 @@ modkey = "Mod4"
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
+   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end, beautiful.hotkeys},
+   { "manual", terminal .. " -e man awesome", beautiful.manual },
    { "edit config", editor_cmd .. " " .. awesome.conffile, beautiful.edit },
-   { "restart", awesome.restart },
-   { "open terminal", terminal },
+   { "restart", awesome.restart, beautiful.reboot },
    --{ "logout", function() awesome.quit() end },
-   { "logout", logout, beautiful.logout },
-   { "sleep", sleep, beautiful.sleep },
-   { "reboot", reboot, beautiful.reboot },
-   { "hibernate", hibernate, beautiful.hibernate },
-   { "poweroff", poweroff, beautiful.poweroff },
 }
 office = {
 	{"Word", word, beautiful.word},
 	{"Excel", excel, beautiful.excel},
 	{"Powerpoint", powerpoint, beautiful.powerpoint},
 	{"Publish", publish, beautiful.publish},
+	{"PDF Viewer", pdfReader, beautiful.evince_icon},
 }
-mymainmenu = freedesktop.menu.build({ 
+exit = {
+	{ "logout", logout, beautiful.logout },
+	{ "sleep", sleep, beautiful.sleep },
+	{ "reboot", reboot, beautiful.reboot },
+	{ "hibernate", hibernate, beautiful.hibernate },
+	{ "poweroff", poweroff, beautiful.poweroff },
+}
+accessories = {
+	{"About XFCE",xfce_about, beautiful.xfce4_icon },
+	{"File Manager", file_explorer_gui, beautiful.thunar_icon},
+	{"Terminal Emulator", lxterminal, beautiful.terminal_icon},
+	{"Neovim", Neovim, beautiful.neovim_icon}, 
+}
+internet = {
+	{"Firefox", firefox, beautiful.firefox_icon},
+	{"Google Chrome", chrome, beautiful.chrome_icon},
+
+}
+settings = {
+	{"Network Configuration", wpa_gui, beautiful.wpa_icon},
+	{"File Manager Settings", file_explorer_setting, beautiful.thunar_icon},
+}
+system_tools= {
+	{"Add/Remove Software", software_center, beautiful.pamac_icon },
+	{"Bulk Rename", rename, beautiful.thunar_icon},
+	{"LXTerminal", terminal, beautiful.terminal_icon},
+	{"Software Update", software_update, beautiful.update_icon},
+	{"Thunar File Manager", thunar, beautiful.thunar_icon},
+	{"Stacer", stacer, beautiful.stacer_icon},
+	{"Virt-Manager", virt_manager,beautiful.virt_manager_icon},
+}
+--[[mymainmenu = freedesktop.menu.build({ 
 	icon_size = beautiful.menu_height or dpi(16),
-	before = { 
+	before = {
+		{"Terminal", terminal, menubar.utils.lookup_icon("utilities-terminal")},
 		{ "Awesome", myawesomemenu, beautiful.awesome_icon },	
-		{"Office", office, beautiful.office},
+		{"Microsoft", office, beautiful.office},
 
 	},
 
 			after = {
-                                  }
-                        })
+			{"Exit", exit},
+                                 }
+                     })
+		     --]]
+mymainmenu = awful.menu {
+	{"Terminal", terminal, beautiful.terminal_icon},
+	{"Browser", firefox, beautiful.internet},
+	{"Files", file_explorer_gui, beautiful.thunar_icon},
+	{"Accessories", accessories, beautiful.accessories},
+	{"Internet", internet, beautiful.internet},
+	{"Settings", settings, beautiful.settings},
+	{"System Tools", system_tools, beautiful.system_tools},
+	{"Awesome", myawesomemenu, beautiful.awesome_icon },
+	{"Office", office, beautiful.office},
+	{"Exit", exit, beautiful.exit},
+}
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
@@ -367,7 +416,7 @@ awful.keyboard.append_global_keybindings({
               {description = "lua execute prompt", group = "awesome"}),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey },            "r",     function () awful.util.spawn_with_shell(dmenu) end,
+    awful.key({ modkey },            "r",     function () awful.util.spawn_with_shell(run_box) end,
               {description = "run dmenu", group = "launcher"}),
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
