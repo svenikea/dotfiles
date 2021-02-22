@@ -1,45 +1,54 @@
 #! /usr/bin/sh
 
 # Detecting username
-username=$(whoaimi)
-
+username=$(whoami)
 
 # Change the file permission 
-sudo chown ${username} $HOME/.config
-sudo chown ${username} $HOME/.fonts
+sudo chown ${username}:${username} $HOME/.config
+sudo chown ${username}:${username} $HOME/.fonts
 
 # Moving files 
-cp .config $HOME/
-cp .fonts $HOME/
-cp .bash_aliases .bash_profile .bashrc .xinitrc $HOME/
-
+# list backup 
+backup = ( 
+'.bash_aliases' 'bash_profile' \
+	'.bashrc' '.xinitrc' \
+	'.config'
+)
 
 # Package before it can work
 # List required packages
 required_package_non_git = (
-'xorg-server' 'xorg-twm' 'xterm' 'xorg-xinit' \
-	'xorg-xlock' 'lightdm')
+'xorg-server' 'xorg-twm' 'xterm' \
+	'xorg-xinit' 'xorg-xlock' 'lightdm' \
+	'tlp' 'kitty' 'xorg-xbacklight'
+)
 required_package_git = (
 'awesomewm-git' 'picom-git'
 )
 
 # List optional packages
 opt_package_non_git = (
-'vicious' 'acpi' 'acpi_call' 'acpid' 'xautolock' \
-	'xclip' 'alsa-utils' 'pulseaudio' 'pulseaudio-alsa' \
-	'pulseaudio-bluetooth' 'lightdm-gtk-greeter' 'neofetch' \
-	'htop' 'python-pip' 'yarn' 'nodejs'
+'vicious' 'acpi' 'acpi_call' 'acpid' \
+	'xautolock' 'xclip' 'alsa-utils' \
+	'pulseaudio' 'pulseaudio-alsa' 'pulseaudio-bluetooth' \
+	'lightdm-gtk-greeter' 'neofetch' 'htop' \
+	'python-pip' 'yarn' 'nodejs' 
 )
 opt_package_git = (
-'redshift-git' 'ranger-git' 'xfce4-power-manager-git' 'dmenu-git' \
-	'awesome-freedesktop-git'
+'redshift-git' 'ranger-git' 'xfce4-power-manager-git' \
+	'dmenu-git' 'awesome-freedesktop-git'
 )
-
 
 pip_package = (
 'jedi' 'pynvim'
 )
-
+backup_config() {
+	for item in ${backup[$]}
+	bak="bak"
+	do
+		mv $item ${item}_bak 
+	done
+}
 installing_required_git_deps(){
 	for package in ${required_package_non_git[@]}
 	do 
@@ -109,6 +118,9 @@ else
 	echo "very well"
 fi
 
+cp .config $HOME/
+cp .fonts $HOME/
+cp .bash_aliases .bash_profile .bashrc .xinitrc $HOME/
 
 # Add neovim to yarn at global env
 yarn global add neovim
