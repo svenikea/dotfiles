@@ -197,8 +197,8 @@ end)
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
-
+mytextclock = wibox.widget.textclock() -- This uses the default 24-hours format, so if you want to set to 12-hours format use this below
+-- " %a %b %d, %I:%M %P"
 screen.connect_signal("request::wallpaper", function(s)
     -- Wallpaper
     if beautiful.wallpaper then
