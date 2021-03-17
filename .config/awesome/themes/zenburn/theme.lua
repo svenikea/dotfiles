@@ -10,7 +10,7 @@ local dpi = require("beautiful.xresources").apply_dpi
 -- {{{ Main
 local theme = {}
 local themes_path = os.getenv("HOME") .. "/.config/awesome/themes/"
-local system_path = "/usr/share/icons/hicolor/"
+local system_path = "/usr/share/icons/Papirus/22x22/apps/"
 -- }}}
 
 -- {{{ Styles
@@ -36,7 +36,7 @@ theme.bg_systray = theme.bg_normal
 
 -- {{{ Borders
 theme.useless_gap   = 5
-theme.border_width  = dpi(10)
+theme.border_width  = dpi(7)
 theme.border_color_normal = "#3F3F3F"
 theme.border_color_active = "#6F6F6F"
 theme.border_color_marked = "#CC9393"
@@ -91,6 +91,7 @@ theme.thermometer               = themes_path .. "zenburn/icons/thermo.jpg"
 
 
 -- Battery info
+theme.low_bat                   = themes_path .. "zenburn/icons/spaceman.jpg"
 theme.bat_icon_20               = themes_path .. "zenburn/icons/bat-020.png"
 theme.bat_icon_40               = themes_path .. "zenburn/icons/bat-040.png"
 theme.bat_icon_60               = themes_path .. "zenburn/icons/bat-060.png"
@@ -115,16 +116,16 @@ theme.outlook                   = themes_path .. "zenburn/icons/Outlook.png"
 theme.publish                  = themes_path .. "zenburn/icons/mspub.ico"
 theme.powerpoint                    = themes_path .. "zenburn/icons/PowerPoint.png"
 -- {{{ Misc
-theme.edit           = themes_path .. "zenburn/icons/edit.png"
-theme.hibernate           = themes_path .. "zenburn/icons/hibernate.png"
-theme.logout           = themes_path .. "zenburn/icons/logout.png"
-theme.poweroff      = themes_path .. "zenburn/icons/poweroff.png"
-theme.reboot           = themes_path .. "zenburn/icons/reboot.png"
-theme.restart        = themes_path .. "zenburn/icons/restart.png"
-theme.sleep           = themes_path .. "zenburn/icons/sleep.png"
+theme.edit           = system_path .. "xfce-edit.svg"
+theme.hibernate           = system_path .."xfsm-hibernate.svg"
+theme.logout           = system_path .. "xfsm-logout.svg"
+theme.poweroff      = system_path .. "cs-power.svg"
+theme.reboot           = system_path .. "xfsm-reboot.svg"
+theme.restart        = system_path .. "system-restart.svg"
+theme.sleep           = system_path .. "sleep.svg"
 theme.awesome_icon           = themes_path .. "zenburn/icons/awesome-icon.png"
-theme.hotkeys           = themes_path .. "zenburn/icons/hotkeys.png"
-theme.manual            = themes_path .. "zenburn/icons/manual.png"
+theme.hotkeys           = system_path .. "khotkeys.svg"
+theme.manual            = system_path .. "deepin-manual.svg"
 theme.menu_submenu_icon      = themes_path .. "zenburn/icons/submenu.png"
 -- }}}
 
@@ -148,23 +149,23 @@ theme.layout_cornerse   = themes_path .. "zenburn/layouts/cornerse.png"
 -- }}}
 -- System icon
 theme.firefox_icon = "/usr/lib/firefox/browser/chrome/icons/default/default16.png"
-theme.terminal_icon = system_path .. "/128x128/apps/lxterminal.png"
-theme.thunar_icon = system_path .. "/128x128/apps/org.xfce.thunar.png"
-theme.evince_icon = system_path .. "/128x128/apps/evincelogo.png"
-theme.neovim_icon = "/usr/share/pixmaps/nvim.png"
-theme.firefox_icon = system_path .. "/128x128/apps/firefox.png"
-theme.chrome_icon = system_path .. "128x128/apps/google-chrome.png"
-theme.wpa_icon = "/usr/share/pixmaps/wpa_gui.svg"
-theme.pamac_icon = system_path .. "/48x48/apps/system-software-install.svg"
-theme.internet = themes_path .. "zenburn/icons/world.png"
-theme.settings = themes_path .. "zenburn/icons/settings.png"
+theme.terminal_icon = system_path .. "lxterminal.svg"
+theme.thunar_icon = system_path .. "thunar.svg"
+theme.evince_icon = system_path .. "evince.svg"
+theme.neovim_icon = system_path .. "nvim-gtk.svg"
+theme.firefox_icon = system_path .. "mozilla-firefox.svg"
+theme.chrome_icon = system_path .. "google-chrome.svg"
+theme.wpa_icon =  system_path .. "mate-network-properties.svg"
+theme.pamac_icon = system_path .. "mx-packageinstaller.svg"
+theme.internet = system_path .. "web-browser.svg"
+theme.settings = system_path .. "applications-accessories.svg"
 theme.accessories = themes_path .. "zenburn/icons/accessories.png"
 theme.exit = themes_path .. "zenburn/icons/exit.png"
-theme.system_tools = themes_path .. "zenburn/icons/system_tools.png"
-theme.stacer_icon = system_path .. "/32x32/apps/stacer.png"
-theme.update_icon = system_path .. "/scalable/status/pamac-tray-update.svg"
-theme.xfce4_icon = system_path .. "/128x128/apps/org.xfce.about.png"
-theme.virt_manager_icon = system_path .. "/48x48/apps/virt-manager.png"
+theme.system_tools = system_path .. "utools.svg"
+theme.stacer_icon = system_path .. "stacer.svg"
+theme.update_icon = system_path .. "pamac-updater.svg"
+theme.xfce4_icon = system_path .. "org.xfce.about.svg"
+theme.virt_manager_icon = system_path .. "virt-manager.svg"
 -- {{{ Titlebar
 theme.titlebar_close_button_focus  = themes_path .. "zenburn/titlebar/close_focus.png"
 theme.titlebar_close_button_normal = themes_path .. "zenburn/titlebar/close_normal.png"
