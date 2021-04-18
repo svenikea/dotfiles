@@ -48,6 +48,7 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/zenburn/theme.lua")
 terminal 			= "lxterminal"
 word 		 		= "word"
 excel 				= "excel"
+vlc 				= "vlc"
 publish 			= "publish"
 powerpoint 			= "powerpoint"
 editor 				= os.getenv("EDITOR") or "nvim"
@@ -135,6 +136,11 @@ internet = {
 	{"Google Chrome", chrome, beautiful.chrome_icon},
 
 }
+
+multimedia = {
+	{"VLC media player", vlc, beautiful.vlc_icon},
+}
+
 settings = {
 	{"Network Configuration", wpa_gui, beautiful.wpa_icon},
 	{"File Manager Settings", file_explorer_setting, beautiful.thunar_icon},
@@ -153,6 +159,7 @@ mymainmenu = awful.menu {
 	{"Browser", firefox, beautiful.internet},
 	{"Files", file_explorer_gui, beautiful.thunar_icon},
 	{"Accessories", accessories, beautiful.accessories},
+	{"Multimedia", multimedia, beautiful.multimedia_icon},
 	{"Internet", internet, beautiful.internet},
 	{"Settings", settings, beautiful.settings},
 	{"System Tools", system_tools, beautiful.system_tools},
@@ -756,16 +763,3 @@ end)
 awful.spawn.with_shell(wallpaper)
 awful.util.spawn_with_shell(lid_operation)		
 --awful.util.spawn_with_shell("dunst -conf /home/john/.config/dunst/dunstrc")
-awesome.connect_signal(
-    'exit',
-    function(args)
-        awful.util.spawn('touch ~/.awesome-restart')
-    end
-)
-
-awesome.connect_signal(
-    'startup',
-    function(args)
-        awful.util.spawn('bash -c "rm ~/.awesome-restart || ~/.config/awesome/input.sh"')
-    end
-)
