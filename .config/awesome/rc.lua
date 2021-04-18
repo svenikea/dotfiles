@@ -29,6 +29,7 @@ local markup = lain.util.markup
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
+
 naughty.connect_signal("request::display_error", function(message, startup)
     naughty.notification {
         urgency = "critical",
@@ -45,9 +46,9 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/zenburn/theme.lua")
 -- This is used later as the default terminal and editor to run.
 
 terminal 			= "lxterminal"
---terminal 			= "kitty"
 word 		 		= "word"
 excel 				= "excel"
+vlc 				= "vlc"
 publish 			= "publish"
 powerpoint 			= "powerpoint"
 editor 				= os.getenv("EDITOR") or "nvim"
@@ -67,7 +68,6 @@ software_center 		= "pamac-manager"
 rename 				= "thunar --bulk-rename"
 Screenshot 			= "maim ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d).png"
 snapshot 			= "import ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d).png"
---wallpaper 			= "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
 wallpaper 			= "feh --recursive --bg-fill --randomize ~/Pictures/wallpapers/"
 run_box 			= "rofi -modi drun,run -show drun -show-icons"
 chrome 				= "google-chrome-stable"
@@ -112,7 +112,7 @@ myawesomemenu = {
    --{ "logout", function() awesome.quit() end },
 }
 office = {
-	{"Word", word, beautiful.word},
+	{"Word", ord, beautiful.word},
 	{"Excel", excel, beautiful.excel},
 	{"Powerpoint", powerpoint, beautiful.powerpoint},
 	{"Publish", publish, beautiful.publish},
@@ -136,6 +136,11 @@ internet = {
 	{"Google Chrome", chrome, beautiful.chrome_icon},
 
 }
+
+multimedia = {
+	{"VLC media player", vlc, beautiful.vlc_icon},
+}
+
 settings = {
 	{"Network Configuration", wpa_gui, beautiful.wpa_icon},
 	{"File Manager Settings", file_explorer_setting, beautiful.thunar_icon},
@@ -149,25 +154,12 @@ system_tools= {
 	{"Stacer", stacer, beautiful.stacer_icon},
 	{"Virt-Manager", virt_manager,beautiful.virt_manager_icon},
 }
---[[mymainmenu = freedesktop.menu.build({ 
-	icon_size = beautiful.menu_height or dpi(16),
-	before = {
-		{"Terminal", terminal, menubar.utils.lookup_icon("utilities-terminal")},
-		{ "Awesome", myawesomemenu, beautiful.awesome_icon },	
-		{"Microsoft", office, beautiful.office},
-
-	},
-
-			after = {
-			{"Exit", exit},
-                                 }
-                     })
-		     --]]
 mymainmenu = awful.menu {
 	{"Terminal", terminal, beautiful.terminal_icon},
 	{"Browser", firefox, beautiful.internet},
 	{"Files", file_explorer_gui, beautiful.thunar_icon},
 	{"Accessories", accessories, beautiful.accessories},
+	{"Multimedia", multimedia, beautiful.multimedia_icon},
 	{"Internet", internet, beautiful.internet},
 	{"Settings", settings, beautiful.settings},
 	{"System Tools", system_tools, beautiful.system_tools},
@@ -197,8 +189,8 @@ end)
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock() -- This uses the default 24-hours format, so if you want to set to 12-hours format use this below
--- " %a %b %d, %I:%M %P"
+mytextclock = wibox.widget.textclock(" %a %b %d, %I:%M %P")
+
 screen.connect_signal("request::wallpaper", function(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -210,9 +202,25 @@ screen.connect_signal("request::wallpaper", function(s)
         gears.wallpaper.maximized(wallpaper, s, true)
     end
 end)
--- Widget bar 
+-- Widget bar
+local mympd = lain.widget.mpd(
+{
+	settings = function()
+        mpd_notification_preset = {
+   title   = "Now playing",
+   timeout = 0,
+   hover_timeout = 0.5,
+   text    = string.format("%s (%s) - %s\n%s", mpd_now.artist,
+             mpd_now.album, mpd_now.date, mpd_now.title),
+
+}
+	end
+})
 -- Battery ---------------------------------------------
 local baticon = wibox.widget.imagebox(beautiful.bat)
+
+
+
 local bat_widget = lain.widget.bat({
 	settings = function ()
 	if bat_now.status and bat_now.status ~= "N/A" then
@@ -244,7 +252,7 @@ local bat_widget = lain.widget.bat({
 	if bat_now.status == "Full" then
             widget:set_markup(markup.font(font, " Full charged "))
 	    baticon:set_image(beautiful.bat_icon_charged)
-	end
+    	end
 	end,
 
 })
@@ -261,7 +269,6 @@ local alsa = lain.widget.alsa()
 local alsa_icon = lain.widget.alsa().icon
 local net = lain.widget.net().widget
 local net_icon = lain.widget.net().icon
-
 screen.connect_signal("request::desktop_decoration", function(s)
     -- Each screen has its own tag table.
     awful.tag({ "A", "W", "E", "S", "O", "M", "E", "W", "M" }, s, awful.layout.layouts[1])
@@ -343,6 +350,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
 	    mem_icon,
 	    mem,
 	    wibox.widget.textbox(" "),
+	    mympd,
+	    wibox.widget.textbox(" "),
 	    cpu_icon,
 	    cpu,
 	    wibox.widget.textbox(" "),
@@ -381,8 +390,10 @@ awful.keyboard.append_global_keybindings({
    awful.key({}, "XF86AudioMute", function() os.execute(volume_toggle) end, {description = "volume mute", group = "hotkeys"}),
    awful.key({}, "XF86MonBrightnessUp", function() os.execute(brightness_up) end, {description = "brightness up", group = "screen"}),
    awful.key({}, "XF86MonBrightnessDown", function() os.execute(brightness_down) end, {description = "brightness down", group = "screen"}),
+   awful.key({"Mod1"}, "F6", function() os.execute(brightness_up) end, {description = "brightness up", group = "screen"}),
+   awful.key({"Mod1"}, "F5", function() os.execute(brightness_down) end, {description = "brightness down", group = "screen"}),
    awful.key({}, "Print", function() awful.spawn.with_shell(Screenshot) end, {description = "screenshot", group = "screen"}),
-   awful.key({}, "F1", function() awful.spawn.with_shell(snapshot) end, {description = "snapshot", group = "screen"}),
+   awful.key({"Mod1"}, "F1", function() awful.spawn.with_shell(snapshot) end, {description = "snapshot", group = "screen"}),
 
 --- {{ Application launcher
     awful.key({modkey, },"c", function () awful.spawn(chrome)end ,
@@ -721,6 +732,8 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
+-------
+-------
 -- {{{ Notifications
 
 ruled.notification.connect_signal('request::rules', function()

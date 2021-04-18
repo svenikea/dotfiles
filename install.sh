@@ -3,45 +3,42 @@
 # Detecting username
 username=$(whoami)
 
-# Change the file permission 
-sudo chown ${username}:${username} $HOME/.config
-sudo chown ${username}:${username} $HOME/.fonts
-
 # Moving files 
 # list backup 
 backup = ( 
 '.bash_aliases' 'bash_profile' \
 	'.bashrc' '.xinitrc' \
-	'.config'
+	'.config' '.exportrc'
 )
 
 # Package before it can work
 # List required packages
 required_package_non_git = (
-'xorg-server' 'xorg-twm' 'xterm' \
-	'xorg-xinit' 'xorg-xlock' 'lightdm' \
-	'tlp' 'kitty' 'xorg-xbacklight'
+'xorg-server' 'xorg-twm' \
+	'xorg-xinit' 'xorg-xlock' \
+	'tlp' 'xorg-xbacklight' 'xf86-video-intel' \
+	'mesa' 'libva-intel-driver'
 )
 required_package_git = (
-'awesomewm-git' 'picom-git'
+'awesomewm-git'
 )
 
 # List optional packages
 opt_package_non_git = (
-'vicious' 'acpi' 'acpi_call' 'acpid' \
-	'xautolock' 'xclip' 'alsa-utils' \
+'acpi' 'acpi_call' 'acpid' \
+	'xclip' 'alsa-utils' \
 	'pulseaudio' 'pulseaudio-alsa' 'pulseaudio-bluetooth' \
 	'lightdm-gtk-greeter' 'neofetch' 'htop' \
-	'python-pip' 'yarn' 'nodejs' 
+	'nodejs' 'lxsession' 'lxterminal' 'lightdm' \
+	'feh' 'maim' 'lightdm-gtk-greeter-settings' 'lxappearance'\
+	'mpd' 'mpc' 'breeze-gtk'
 )
 opt_package_git = (
-'redshift-git' 'ranger-git' 'xfce4-power-manager-git' \
-	'dmenu-git' 'awesome-freedesktop-git'
+'ranger-git' 'rofi-git' 'light-locker-settings' 'pamac-aur' \
+	'papirus-icon-theme-git' 'plymouth-git' \
+	'grub-theme-poly-dark-git' 'plymouth-themes-adi1090x-pack2-git'
 )
 
-pip_package = (
-'jedi' 'pynvim'
-)
 backup_config() {
 	for item in ${backup[$]}
 	bak="bak"
@@ -62,7 +59,7 @@ installing_required_git_deps(){
 installing_required_non_git_deps(){
 	for package in ${required_package_git[@]}
 	do
-		install --needed $package --noconfirm
+		 sudo pacman -Sy --needed $package --noconfirm
 	done
 }
 
@@ -80,16 +77,10 @@ installing_opt_git_deps(){
 installing_opt_non_git_deps(){
 	for package in ${opt_package_non_git[@]}
 	do
-		install --needed $package --noconfirm
+		sudo pacman -Sy --needed $package --noconfirm
 	done
 }
 
-installing_pip_package(){
-	for package in ${pip_package[@]}
-	do
-		pip install $package
-	done
-}
 ############################################## Installing process ############################################
 
 echo "Hi "${username} 
@@ -118,12 +109,8 @@ else
 	echo "very well"
 fi
 
-cp .config $HOME/
-cp .fonts $HOME/
-cp .bash_aliases .bash_profile .bashrc .xinitrc $HOME/
+cp -rf .config .fonts .vimrc .bash_aliases .bash_profile .bashrc .xinitrc $HOME/
 
-# Add neovim to yarn at global env
-yarn global add neovim
 
 # Enable tap to click on touchpad
 sudo mkdir -p /etc/X11/xorg.conf.d && sudo tee <<'EOF' /etc/X11/xorg.conf.d/90-touchpad.conf 1> /dev/null
@@ -136,4 +123,18 @@ Section "InputClass"
 EndSection
 
 EOF
+# Enable and start some services
+sudo systemctl enable lightdm-plymouth
+sudo systemctl enable tlp
+sudo systemctl start tlp
+sudo systemctl start ligthdm-plymouth
+
+# Grub configuration 
+sudo sed -i 's/loglevel=3\squiet/loglevel=3\ quiet\ rd.udev.log_priority=3\ vt.gloable_cursor-default=0/g' /etc/default/grub
+sudo echo 'GRUB_THEME="/usr/share/grub/themes/poly-dark/theme.txt"' >> /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# Plymouth theme configuration
+sudo plymouth-set-default-theme -R deus_ex
+sudo mkinitcpio -P
 echo "Remember to reload AwesomeWM with the combo press Ctrl+Windows_keys+r after all of this is completed"
