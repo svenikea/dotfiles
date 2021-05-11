@@ -97,13 +97,11 @@ hibernate 			= "systemctl hibernate"
 --
 
 -- {{ Effect and theme
--- Rounded corners on clients
-client.connect_signal("manage", function (c)
-    c.shape = function(cr,w,h)
-        gears.shape.rounded_rect(cr,w,h,15)
-    end
-end)
-
+--client.connect_signal("manage", function (c)
+ --   c.shape = function(cr,w,h)
+  --      gears.shape.rounded_rect(cr,w,h,15)
+   -- end
+--end)
 
 modkey = "Mod4"
 -- }}}
@@ -335,7 +333,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
     -- Add widgets to the wibox
     s.mywibox.widget = {
-	expand = "none",
+	expand = "yes",
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
