@@ -152,6 +152,4 @@ fi
 #	PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 #fi
 neofetch
-export VISUAL=nvim;
-export EDITOR=nvim;
 PS1='\[\e[36m\][\[\e[00m\]\[\e[32m\]\h\[\e[00m\]\[\e[33m\]@\[\e[00m\]\[\e[34m\]Arch\[\e[00m\] \[\e[31m\]\W\[\e[00m\]\[\e[36m\]]\[\e[00m\]\[\e[35m\]\$\[\e[00m\] '

@@ -1,4 +1,6 @@
-export WINEARCH="win32";
-export WINEPREFIX=~/.wine;
 export VISUAL=nvim;
 export EDITOR=nvim;
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket";
+export XDG_RUNTIME_DIR="/run/user/$UID";
+export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus";
+export XTERM=lxterminal;
