@@ -1,4 +1,2 @@
-export WINEARCH="win32";
-export WINEPREFIX=~/.wine;
 export VISUAL=nvim;
 export EDITOR=nvim;
